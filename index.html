@@ -1,0 +1,5116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar-YSR</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* NAVBAR */
+        /* Reset & Base Styles (scoped within navbar) */
+        .ysr-navbar * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .ysr-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #FFFFFF;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            border-bottom: 1px solid #E5E7EB;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Main container */
+        .navbar-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0.875rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            background: #FFFFFF;
+        }
+
+        /* Logo area */
+        .navbar-logo {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-logo img {
+            height: 48px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            display: block;
+            transition: opacity 0.2s ease;
+            border-radius: 15px;
+        }
+
+        /* Hamburger (mobile) */
+        .hamburger {
+            display: none;
+            font-size: 1.9rem;
+            cursor: pointer;
+            color: #111111;
+            background: none;
+            border: none;
+            line-height: 1;
+            padding: 0.25rem;
+            transition: color 0.2s ease;
+        }
+
+        .hamburger:hover {
+            color: #FCA421;
+        }
+
+        /* Desktop navigation wrapper (flex row) */
+        .nav-links-wrapper {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: flex-end;
+            margin-left: 290px;
+        }
+
+        /* Navigation list & CTA container */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex: 1;
+            transition: all 0.2s ease;
+        }
+
+        /* Navigation links list */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            margin-right: auto;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #111111;
+            padding: 0.5rem 0;
+            transition: color 0.25s ease, border-bottom 0.2s;
+            letter-spacing: -0.01em;
+            position: relative;
+        }
+
+        /* Hover & active link states (#FCA421) */
+        .nav-links li a:hover {
+            color: #FCA421;
+        }
+
+        .nav-links li a.active {
+            color: #FCA421;
+            font-weight: 600;
+        }
+
+        /* CTA Button (prominent) */
+        .cta-button {
+            background: #FCA421;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+            font-family: inherit;
+        }
+
+        .cta-button:hover {
+            background: #e08e1a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(252, 164, 33, 0.25);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive: Mobile styles */
+        @media screen and (max-width: 768px) {
+            .navbar-container {
+                padding: 0.75rem 1.25rem;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            /* Hide main menu by default on mobile */
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #FFFFFF;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                padding: 0;
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+                border-top: 1px solid #E5E7EB;
+                border-bottom: 1px solid #E5E7EB;
+                transform: scaleY(0);
+                transform-origin: top;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.2s ease, visibility 0.2s, transform 0.2s ease;
+                z-index: 999;
+                pointer-events: none;
+            }
+
+            /* When toggled open */
+            .nav-menu.mobile-open {
+                transform: scaleY(1);
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                padding: 1.25rem 1.5rem 1.5rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1.25rem;
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1.5rem;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links li a {
+                display: block;
+                font-size: 1.1rem;
+                padding: 0.4rem 0;
+                width: 100%;
+            }
+
+            .cta-button {
+                width: 100%;
+                text-align: center;
+                padding: 0.85rem 1rem;
+                font-size: 1rem;
+                margin-top: 0.5rem;
+            }
+
+            .nav-links-wrapper {
+                flex: unset;
+            }
+        }
+
+        /* Small adjustments for extra small devices */
+        @media screen and (max-width: 480px) {
+            .navbar-container {
+                padding: 0.65rem 1rem;
+            }
+
+            .navbar-logo img {
+                height: 40px;
+            }
+
+            .nav-menu.mobile-open {
+                padding: 1rem 1.25rem 1.25rem;
+            }
+        }
+
+        /* Desktop fine-tuning */
+        @media screen and (min-width: 769px) {
+            .nav-menu {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                transform: none !important;
+                position: relative;
+                top: auto;
+                left: auto;
+                background: transparent;
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                pointer-events: auto;
+                flex-direction: row;
+            }
+        }
+
+        /* Active link underline optional but clean */
+        .nav-links li a.active {
+            position: relative;
+        }
+
+        /* Subtle focus outline for accessibility */
+        .cta-button:focus-visible,
+        .hamburger:focus-visible,
+        .nav-links li a:focus-visible {
+            outline: 2px solid #FCA421;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* CATEGORIES SECTION */
+        .bj-wrap {
+            background: #ffffff;
+            padding: 4rem 2rem 3rem;
+            font-family: 'Barlow', sans-serif;
+        }
+
+        .bj-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .bj-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .bj-eyebrow-line {
+            width: 32px;
+            height: 2px;
+            background: #FCA421;
+        }
+
+        .bj-eyebrow-text {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #FCA421;
+        }
+
+        .bj-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(34px, 5vw, 54px);
+            font-weight: 800;
+            color: #1A1A1A;
+            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.75rem;
+        }
+
+        .bj-title em {
+            color: #FCA421;
+            font-style: normal;
+        }
+
+        .bj-subtitle {
+            font-size: 14px;
+            color: #999;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            max-width: 380px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
+        }
+
+        .bj-title-underline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .bj-ul-dash {
+            height: 1px;
+            width: 40px;
+            background: #e0e0e0;
+        }
+
+        .bj-ul-dot {
+            width: 6px;
+            height: 6px;
+            background: #1C115F;
+            border-radius: 50%;
+        }
+
+        .bj-ul-dash2 {
+            height: 1px;
+            width: 40px;
+            background: #e0e0e0;
+        }
+
+        .bj-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+            .bj-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .bj-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .bj-wrap {
+                padding: 2.5rem 1rem 2rem;
+            }
+
+            .bj-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25rem;
+            }
+        }
+
+        .bj-card {
+            background: #1A1A1A;
+            border-radius: 6px;
+            padding: 1.4rem 1.1rem 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: 1.5px solid #272727;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            min-height: 190px;
+        }
+
+        .bj-card-noise {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .bj-card-stripe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2.5px;
+            background: linear-gradient(90deg, #FCA421 0%, #FCA421 0%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.25s ease;
+        }
+
+        .bj-card-glow {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(252, 164, 33, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        .bj-card-corner {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 28px 28px;
+            border-color: transparent transparent #FCA421 transparent;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .bj-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28), 0 0 0 1.5px #FCA421;
+            border-color: #FCA421;
+        }
+
+        .bj-card:hover .bj-card-stripe {
+            transform: scaleX(1);
+        }
+
+        .bj-card:hover .bj-card-glow {
+            opacity: 1;
+        }
+
+        .bj-card:hover .bj-card-corner {
+            opacity: 1;
+        }
+
+        .bj-card:hover .bj-icon-wrap {
+            background: #FCA421;
+        }
+
+        .bj-card:hover .bj-icon-wrap svg {
+            color: #1A1A1A;
+        }
+
+        .bj-card:hover .bj-card-cta {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .bj-card:hover .bj-card-num {
+            color: rgba(252, 164, 33, 0.12);
+        }
+
+        .bj-card-num {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.04);
+            line-height: 1;
+            letter-spacing: -0.02em;
+            transition: color 0.2s ease;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .bj-icon-wrap {
+            width: 42px;
+            height: 42px;
+            background: rgba(252, 164, 33, 0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.9rem;
+            transition: background 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .bj-icon-wrap svg {
+            width: 20px;
+            height: 20px;
+            color: #FCA421;
+            stroke-width: 1.8;
+            transition: color 0.2s ease;
+        }
+
+        .bj-card-tag {
+            display: inline-block;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #555;
+            border: 1px solid #2e2e2e;
+            border-radius: 2px;
+            padding: 2px 5px;
+            margin-bottom: 0.45rem;
+            align-self: flex-start;
+        }
+
+        .bj-card-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            line-height: 1.1;
+            margin-bottom: 5px;
+        }
+
+        .bj-card-desc {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.55;
+            font-weight: 400;
+            flex: 1;
+        }
+
+        .bj-card-cta {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #FCA421;
+            margin-top: 0.8rem;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .bj-card-cta svg {
+            width: 11px;
+            height: 11px;
+            stroke-width: 2.5;
+        }
+
+        .bj-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ebebeb;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bj-stats {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .bj-stat {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .bj-stat-n {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: #1A1A1A;
+        }
+
+        .bj-stat-n.accent {
+            color: #1C115F;
+        }
+
+        .bj-stat-l {
+            font-size: 11px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            font-weight: 500;
+        }
+
+        .bj-divider {
+            width: 1px;
+            height: 24px;
+            background: #e0e0e0;
+        }
+
+        .bj-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #fff;
+            background: #1A1A1A;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bj-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #FCA421;
+            transform: translateX(-101%);
+            transition: transform 0.2s ease;
+        }
+
+        .bj-cta:hover::before {
+            transform: translateX(0);
+        }
+
+        .bj-cta:hover {
+            color: #1A1A1A;
+        }
+
+        .bj-cta span,
+        .bj-cta svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .bj-cta svg {
+            width: 13px;
+            height: 13px;
+            stroke-width: 2.5;
+        }
+
+
+        /* WHO WE SERVE */
+        /* ─ HEADER ─ */
+        .ws-head {
+            padding: 100px 72px 72px;
+            max-width: 1320px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 480px;
+            align-items: end;
+            gap: 48px;
+        }
+
+        .ws-head__tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: #FCA421;
+            margin-bottom: 22px;
+        }
+
+        .ws-head__tag-bar {
+            width: 28px;
+            height: 2px;
+            background: #FCA421;
+            flex-shrink: 0
+        }
+
+        .ws-head__h {
+            font-size: clamp(48px, 5.5vw, 72px);
+            font-weight: 900;
+            line-height: .95;
+            letter-spacing: -.03em;
+            color: #1A1A1A;
+        }
+
+        .ws-head__h em {
+            font-style: normal;
+            color: #1C115F;
+            display: block;
+        }
+
+        .ws-head__sub {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #888;
+            max-width: 380px;
+            align-self: end;
+            padding-bottom: 6px;
+        }
+
+        /* ─ MAIN GRID ─ */
+        .ws-grid {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 72px 110px;
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 2px;
+        }
+
+        /* ─ FEATURED BLOCK (Contractors) spans 2 rows left ─ */
+        .ws-feat {
+            grid-column: 1;
+            grid-row: 1/3;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 760px;
+        }
+
+        .ws-feat__img {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .ws-feat__img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .9s cubic-bezier(.25, .46, .45, .94);
+            filter: brightness(.55) contrast(1.1);
+        }
+
+        .ws-feat:hover .ws-feat__img img {
+            transform: scale(1.06)
+        }
+
+        .ws-feat__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, rgba(26, 26, 26, .05) 0%, rgba(26, 26, 26, .92) 70%);
+        }
+
+        .ws-feat__body {
+            position: relative;
+            z-index: 2;
+            margin-top: auto;
+            padding: 56px 52px;
+        }
+
+        .ws-feat__num {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: rgba(252, 164, 33, .9);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ws-feat__num::after {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: rgba(252, 164, 33, .4)
+        }
+
+        .ws-feat__h {
+            font-size: clamp(34px, 3.8vw, 50px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -.025em;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .ws-feat__p {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, .62);
+            max-width: 400px;
+            margin-bottom: 36px;
+        }
+
+        .ws-feat__pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 40px
+        }
+
+        .ws-feat__pill {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .06em;
+            border: 1px solid rgba(252, 164, 33, .35);
+            color: rgba(252, 164, 33, .9);
+            padding: 6px 16px;
+            border-radius: 2px;
+        }
+
+        .ws-feat__link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #FCA421;
+            text-decoration: none;
+        }
+
+        .ws-feat__link-arrow {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(252, 164, 33, .4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .25s, border-color .25s, transform .25s;
+            flex-shrink: 0;
+        }
+
+        .ws-feat__link:hover .ws-feat__link-arrow {
+            background: #FCA421;
+            border-color: #FCA421;
+            transform: translateX(3px);
+        }
+
+        .ws-feat__link:hover .ws-feat__link-arrow svg {
+            stroke: #1A1A1A
+        }
+
+        .ws-feat__link-arrow svg {
+            transition: stroke .25s
+        }
+
+        /* ─ RIGHT BLOCKS ─ */
+        .ws-card {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 380px;
+        }
+
+        .ws-card--a {
+            background: #fff
+        }
+
+        .ws-card--b {
+            background: #1A1A1A
+        }
+
+        .ws-card__img {
+            height: 220px;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .ws-card__img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .8s cubic-bezier(.25, .46, .45, .94);
+        }
+
+        .ws-card:hover .ws-card__img img {
+            transform: scale(1.06)
+        }
+
+        .ws-card__img-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            background: #FCA421;
+            color: #1A1A1A;
+            padding: 6px 14px;
+        }
+
+        .ws-card__body {
+            padding: 38px 44px 44px;
+            flex: 1;
+            display: flex;
+            flex-direction: column
+        }
+
+        .ws-card__num {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ws-card--a .ws-card__num {
+            color: #FCA421
+        }
+
+        .ws-card--b .ws-card__num {
+            color: rgba(252, 164, 33, .8)
+        }
+
+        .ws-card__num::after {
+            content: '';
+            width: 24px;
+            height: 1px
+        }
+
+        .ws-card--a .ws-card__num::after {
+            background: rgba(252, 164, 33, .3)
+        }
+
+        .ws-card--b .ws-card__num::after {
+            background: rgba(252, 164, 33, .2)
+        }
+
+        .ws-card__h {
+            font-size: clamp(22px, 2.2vw, 28px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -.02em;
+            margin-bottom: 14px;
+        }
+
+        .ws-card--a .ws-card__h {
+            color: #1A1A1A
+        }
+
+        .ws-card--b .ws-card__h {
+            color: #fff
+        }
+
+        .ws-card__p {
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.6;
+            margin-bottom: 30px
+        }
+
+        .ws-card--a .ws-card__p {
+            color: #777
+        }
+
+        .ws-card--b .ws-card__p {
+            color: rgba(255, 255, 255, .5)
+        }
+
+        .ws-card__link {
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            text-decoration: none;
+            width: fit-content;
+            position: relative;
+            padding-bottom: 3px;
+        }
+
+        .ws-card--a .ws-card__link {
+            color: #1A1A1A
+        }
+
+        .ws-card--b .ws-card__link {
+            color: #FCA421
+        }
+
+        .ws-card__link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            transition: width .3s ease;
+        }
+
+        .ws-card--a .ws-card__link::after {
+            background: #FCA421
+        }
+
+        .ws-card--b .ws-card__link::after {
+            background: #FCA421
+        }
+
+        .ws-card__link:hover::after {
+            width: 100%
+        }
+
+        .ws-card__link svg {
+            transition: transform .25s
+        }
+
+        .ws-card__link:hover svg {
+            transform: translateX(4px)
+        }
+
+        /* top accent on light card */
+        .ws-card--a {
+            border-top: 3px solid #FCA421
+        }
+
+        /* top accent on dark card */
+        .ws-card--b::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #1C115F;
+            z-index: 2;
+        }
+
+        /* ─ BOTTOM STRIP ─ */
+        .ws-strip {
+            background: #f8f8f8;
+            border-top: 1px solid #efefef;
+        }
+
+        .ws-strip__inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 48px 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+        .ws-strip__stat {
+            display: flex;
+            flex-direction: column;
+            gap: 5px
+        }
+
+        .ws-strip__num {
+            font-size: clamp(28px, 3vw, 40px);
+            font-weight: 900;
+            letter-spacing: -.03em;
+            color: #1A1A1A;
+            line-height: 1;
+        }
+
+        .ws-strip__num span {
+            color: #FCA421
+        }
+
+        .ws-strip__label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #bbb;
+            letter-spacing: .1em;
+            text-transform: uppercase
+        }
+
+        .ws-strip__divider {
+            width: 1px;
+            height: 44px;
+            background: #e0e0e0;
+            flex-shrink: 0
+        }
+
+        .ws-strip__cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #1A1A1A;
+            border: 1.5px solid #1A1A1A;
+            padding: 14px 28px;
+            flex-shrink: 0;
+            transition: background .25s, border-color .25s, color .25s;
+        }
+
+        .ws-strip__cta:hover {
+            background: #FCA421;
+            border-color: #FCA421;
+            color: #1A1A1A
+        }
+
+        .ws-strip__cta svg {
+            transition: transform .25s
+        }
+
+        .ws-strip__cta:hover svg {
+            transform: translateX(3px)
+        }
+
+        /* ─ RESPONSIVE ─ */
+        @media(max-width:1100px) {
+
+            .ws-head,
+            .ws-grid {
+                padding-left: 48px;
+                padding-right: 48px
+            }
+
+            .ws-strip__inner {
+                padding-left: 48px;
+                padding-right: 48px
+            }
+
+            .ws-head {
+                grid-template-columns: 1fr 320px
+            }
+        }
+
+        @media(max-width:860px) {
+            .ws-head {
+                padding: 56px 24px 44px;
+                grid-template-columns: 1fr;
+                gap: 20px
+            }
+
+            .ws-head__sub {
+                max-width: 100%
+            }
+
+            .ws-grid {
+                padding: 0 24px 64px;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto
+            }
+
+            .ws-feat {
+                grid-column: 1;
+                grid-row: auto;
+                min-height: 500px
+            }
+
+            .ws-feat__body {
+                padding: 40px 28px
+            }
+
+            .ws-card {
+                min-height: auto
+            }
+
+            .ws-card__body {
+                padding: 30px 24px 36px
+            }
+
+            .ws-strip__inner {
+                padding: 36px 24px;
+                flex-wrap: wrap;
+                gap: 20px
+            }
+
+            .ws-strip__divider {
+                display: none
+            }
+        }
+
+
+        /* SERVICES SECTION */
+        .ysr-services {
+            --bg: #1A1A1A;
+            --text-primary: #FFFFFF;
+            --accent: #FCA421;
+            --text-secondary: #B0B0B0;
+            --accent-deep: #1C115F;
+            --card-bg: #222222;
+            --card-border: rgba(255, 255, 255, 0.06);
+            --card-hover-border: rgba(252, 164, 33, 0.35);
+
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(252, 164, 33, 0.07) 0%, transparent 70%),
+                repeating-linear-gradient(90deg,
+                    transparent,
+                    transparent 79px,
+                    rgba(255, 255, 255, 0.018) 79px,
+                    rgba(255, 255, 255, 0.018) 80px);
+            padding: 100px 24px 110px;
+            font-family: 'Barlow', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ysr-services::before {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: -60px;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(28, 17, 95, 0.45) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .ysr-services__inner {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* ── Header ── */
+        .ysr-services__header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: end;
+            gap: 24px;
+            margin-bottom: 64px;
+        }
+
+        .ysr-services__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 18px;
+        }
+
+        .ysr-services__eyebrow::before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 2px;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .ysr-services__title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(36px, 5.5vw, 58px);
+            font-weight: 800;
+            line-height: 1.05;
+            color: var(--text-primary);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        .ysr-services__title span {
+            color: var(--accent);
+        }
+
+        .ysr-services__subtitle {
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin: 14px 0 0;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .ysr-services__count {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 96px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.04);
+            line-height: 1;
+            user-select: none;
+            white-space: nowrap;
+            align-self: start;
+            padding-top: 8px;
+        }
+
+        /* ── Grid ── */
+        .ysr-services__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--card-border);
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* ── Card ── */
+        .ysr-card {
+            background: var(--card-bg);
+            padding: 40px 32px 44px;
+            position: relative;
+            transition: background 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            cursor: default;
+        }
+
+        .ysr-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--accent);
+            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .ysr-card:hover {
+            background: #272727;
+        }
+
+        .ysr-card:hover::after {
+            width: 100%;
+        }
+
+        .ysr-card__number {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: rgba(252, 164, 33, 0.5);
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .ysr-card:hover .ysr-card__number {
+            color: var(--accent);
+        }
+
+        .ysr-card__icon-wrap {
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(252, 164, 33, 0.2);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s, background 0.3s;
+            flex-shrink: 0;
+        }
+
+        .ysr-card:hover .ysr-card__icon-wrap {
+            border-color: var(--accent);
+            background: rgba(252, 164, 33, 0.08);
+        }
+
+        .ysr-card__icon-wrap svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.3s ease;
+        }
+
+        .ysr-card:hover .ysr-card__icon-wrap svg {
+            transform: scale(1.1);
+        }
+
+        .ysr-card__title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--text-primary);
+            line-height: 1.1;
+            margin: 0;
+        }
+
+        .ysr-card__desc {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .ysr-card__link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(252, 164, 33, 0.0);
+            text-decoration: none;
+            transition: color 0.3s, gap 0.3s;
+            margin-top: auto;
+        }
+
+        .ysr-card__link svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.3s;
+        }
+
+        .ysr-card:hover .ysr-card__link {
+            color: var(--accent);
+            gap: 11px;
+        }
+
+        .ysr-card:hover .ysr-card__link svg {
+            transform: translateX(3px);
+        }
+
+        /* ── Divider Line ── */
+        .ysr-services__divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(252, 164, 33, 0.3) 30%, rgba(252, 164, 33, 0.3) 70%, transparent);
+            margin: 56px 0 0;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .ysr-services__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ysr-services__count {
+                display: none;
+            }
+
+            .ysr-services__header {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .ysr-services {
+                padding: 72px 20px 80px;
+            }
+
+            .ysr-services__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ysr-services__header {
+                margin-bottom: 44px;
+            }
+
+            .ysr-card {
+                padding: 32px 24px 36px;
+            }
+        }
+
+        /* ─── BENIFITS SECTION ─────────────────────────────────── */
+        .ysr-services-section {
+            padding: 80px 20px;
+            position: relative;
+            background: #E7E8E7;
+        }
+
+        /* ─── HEADING BLOCK ───────────────────────────── */
+        .ysr-services-text {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+            color: #ffc400;
+        }
+
+        .ysr-services-text h2 {
+            font-size: clamp(22px, 4vw, 40px);
+            /* fluid — never overflows */
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 1px rgb(0, 0, 0);
+            line-height: 1.2;
+        }
+
+        .ysr-services-text p {
+            font-size: clamp(13px, 1.5vw, 16px);
+            color: rgb(63, 63, 63);
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* ─── GRID ────────────────────────────────────── */
+        .ysr-services-con {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Card 4 wide, card 5 narrow — desktop default */
+        .ysr-services-con .ysr-service-card:nth-child(4) {
+            grid-column: 1 / 3;
+        }
+
+        .ysr-services-con .ysr-service-card:nth-child(5) {
+            grid-column: 3 / 4;
+        }
+
+        /* ─── CARD ────────────────────────────────────── */
+        .ysr-service-card {
+            background: rgba(0, 0, 0, 0.877);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 20px;
+            border-radius: 15px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ysr-service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ─── ICON ────────────────────────────────────── */
+        .ysr-service-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #ffa600;
+            flex-shrink: 0;
+        }
+
+        .ysr-service-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e0e0c0;
+        }
+
+        .ysr-service-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* ─── TABLET  (601px – 1024px) ────────────────── */
+        @media (max-width: 1024px) {
+            .ysr-services-con {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Reset desktop overrides first */
+            .ysr-services-con .ysr-service-card:nth-child(4),
+            .ysr-services-con .ysr-service-card:nth-child(5) {
+                grid-column: auto;
+            }
+
+            /* Card 5 spans full width on 2-col so the row doesn't orphan */
+            .ysr-services-con .ysr-service-card:nth-child(5) {
+                grid-column: 1 / -1;
+            }
+        }
+
+        /* ─── MOBILE  (≤ 600px) ───────────────────────── */
+        @media (max-width: 600px) {
+            .ysr-services-section {
+                padding: 50px 12px;
+            }
+
+            .ysr-services-text {
+                margin-bottom: 28px;
+            }
+
+            .ysr-services-con {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
+            /* Reset tablet overrides */
+            .ysr-services-con .ysr-service-card:nth-child(4),
+            .ysr-services-con .ysr-service-card:nth-child(5) {
+                grid-column: auto;
+            }
+
+            /* Card 5 full width so it doesn't sit orphaned at half width */
+            .ysr-services-con .ysr-service-card:nth-child(5) {
+                grid-column: 1 / -1;
+            }
+
+            .ysr-service-card {
+                padding: 18px 14px;
+                gap: 10px;
+            }
+
+            .ysr-service-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .ysr-service-card h3 {
+                font-size: 14px;
+            }
+
+            .ysr-service-card p {
+                font-size: 12px;
+            }
+        }
+
+
+        /* SHOWROOM SHOWCASE SECTION */
+        .ysr-showroom {
+            --bg: #FFFFFF;
+            --text: #111111;
+            --muted: #6B7280;
+            --accent: #FCA421;
+            --dark: #1A1A1A;
+            --radius: 6px;
+
+            font-family: 'Barlow', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ══════════════════════════════
+        HEADER
+    ══════════════════════════════ */
+        .ysr-header {
+            padding: 80px 7vw 48px;
+        }
+
+        .ysr-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .ysr-eyebrow::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .ysr-title {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.06;
+            letter-spacing: -0.025em;
+            color: var(--dark);
+            margin-bottom: 14px;
+        }
+
+        .ysr-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .ysr-subtitle {
+            font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+            font-weight: 400;
+            color: var(--muted);
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        /* ══════════════════════════════
+        VIDEO — clean, no pseudo layers
+    ══════════════════════════════ */
+        .ysr-video-section {
+            padding: 0 7vw;
+            margin-bottom: 64px;
+        }
+
+        .ysr-video-frame {
+            position: relative;
+            width: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--dark);
+            aspect-ratio: 16 / 7;
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.04),
+                0 8px 24px rgba(0, 0, 0, 0.08),
+                0 32px 64px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Fallback shown BEHIND the video */
+        .ysr-video-fallback {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(135deg, #1c1c1c 0%, #0e0e0e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .ysr-video-fallback svg {
+            width: 48px;
+            height: 48px;
+            opacity: 0.3;
+        }
+
+        .ysr-video-fallback span {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        /* Video — z-index 1, nothing covers it */
+        .ysr-video-frame video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            z-index: 1;
+        }
+
+        /* Badge — z-index 2, floats above video */
+        .ysr-vid-badge {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(17, 17, 17, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 8px 16px;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+
+        .ysr-vid-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+            animation: ysrPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes ysrPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(0.65);
+            }
+        }
+
+        .ysr-video-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .ysr-video-meta span {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+        }
+
+        .ysr-video-meta a {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+
+        .ysr-video-meta a:hover {
+            gap: 10px;
+        }
+
+        /* ══════════════════════════════
+        GALLERY
+    ══════════════════════════════ */
+        .ysr-gallery-section {
+            padding: 0 7vw 80px;
+        }
+
+        .ysr-gallery-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .ysr-gallery-head h3 {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 700;
+            color: var(--dark);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .ysr-gallery-head h3 span {
+            color: var(--accent);
+        }
+
+        .ysr-filter-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .ysr-filter-btn {
+            font-family: 'Barlow', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 7px 16px;
+            border-radius: 3px;
+            border: 1.5px solid #E5E7EB;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ysr-filter-btn.active,
+        .ysr-filter-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--dark);
+        }
+
+        /* Bento grid */
+        .ysr-bento {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 60px;
+            gap: 10px;
+        }
+
+        .ysr-tile {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+            background: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .ysr-tile:nth-child(1) {
+            grid-column: 1 / 7;
+            grid-row: 1 / 7;
+        }
+
+        .ysr-tile:nth-child(2) {
+            grid-column: 7 / 10;
+            grid-row: 1 / 4;
+        }
+
+        .ysr-tile:nth-child(3) {
+            grid-column: 10 / 13;
+            grid-row: 1 / 4;
+        }
+
+        .ysr-tile:nth-child(4) {
+            grid-column: 7 / 10;
+            grid-row: 4 / 7;
+        }
+
+        .ysr-tile:nth-child(5) {
+            grid-column: 10 / 13;
+            grid-row: 4 / 7;
+        }
+
+        .ysr-tile:nth-child(6) {
+            grid-column: 1 / 5;
+            grid-row: 7 / 11;
+        }
+
+        .ysr-tile:nth-child(7) {
+            grid-column: 5 / 9;
+            grid-row: 7 / 11;
+        }
+
+        .ysr-tile:nth-child(8) {
+            grid-column: 9 / 13;
+            grid-row: 7 / 11;
+        }
+
+        .ysr-tile img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+        }
+
+        .ysr-tile:hover img {
+            transform: scale(1.07);
+        }
+
+        .ysr-tile-mask {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(17, 17, 17, 0.85) 0%,
+                    rgba(17, 17, 17, 0.2) 45%,
+                    transparent 70%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .ysr-tile:hover .ysr-tile-mask {
+            opacity: 1;
+        }
+
+        .ysr-tile-tag {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 5px;
+            transform: translateY(10px);
+            transition: transform 0.35s ease;
+        }
+
+        .ysr-tile-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+            transform: translateY(10px);
+            transition: transform 0.38s ease;
+        }
+
+        .ysr-tile:hover .ysr-tile-tag,
+        .ysr-tile:hover .ysr-tile-label {
+            transform: translateY(0);
+        }
+
+        .ysr-tile-num {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 2;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--dark);
+            font-size: 13px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.7);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        .ysr-tile:hover .ysr-tile-num {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .ysr-tile.featured::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2.5px solid var(--accent);
+            border-radius: var(--radius);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .ysr-tile.featured:hover::after {
+            opacity: 1;
+        }
+
+        /* ══════════════════════════════
+        CTA
+    ══════════════════════════════ */
+        .ysr-cta {
+            margin: 0 7vw 80px;
+            background: var(--dark);
+            border-radius: var(--radius);
+            padding: 44px 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ysr-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .ysr-cta-left {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ysr-cta-left h4 {
+            font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .ysr-cta-left p {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.45);
+            max-width: 400px;
+            line-height: 1.65;
+        }
+
+        .ysr-btn {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent);
+            color: var(--dark);
+            font-family: 'Barlow', sans-serif;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 15px 30px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .ysr-btn:hover {
+            background: #e8931a;
+            transform: translateY(-2px);
+        }
+
+        .ysr-btn svg {
+            transition: transform 0.2s;
+        }
+
+        .ysr-btn:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* ══════════════════════════════
+        RESPONSIVE
+    ══════════════════════════════ */
+        @media (max-width: 960px) {
+            .ysr-bento {
+                grid-template-columns: repeat(6, 1fr);
+                grid-auto-rows: 56px;
+            }
+
+            .ysr-tile:nth-child(1) {
+                grid-column: 1 / 7;
+                grid-row: 1 / 5;
+            }
+
+            .ysr-tile:nth-child(2) {
+                grid-column: 1 / 4;
+                grid-row: 5 / 9;
+            }
+
+            .ysr-tile:nth-child(3) {
+                grid-column: 4 / 7;
+                grid-row: 5 / 9;
+            }
+
+            .ysr-tile:nth-child(4) {
+                grid-column: 1 / 3;
+                grid-row: 9 / 13;
+            }
+
+            .ysr-tile:nth-child(5) {
+                grid-column: 3 / 5;
+                grid-row: 9 / 13;
+            }
+
+            .ysr-tile:nth-child(6) {
+                grid-column: 5 / 7;
+                grid-row: 9 / 13;
+            }
+
+            .ysr-tile:nth-child(7) {
+                grid-column: 1 / 4;
+                grid-row: 13 / 17;
+            }
+
+            .ysr-tile:nth-child(8) {
+                grid-column: 4 / 7;
+                grid-row: 13 / 17;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .ysr-header {
+                padding: 48px 5vw 32px;
+            }
+
+            .ysr-video-section,
+            .ysr-gallery-section {
+                padding-left: 5vw;
+                padding-right: 5vw;
+            }
+
+            .ysr-cta {
+                margin-left: 5vw;
+                margin-right: 5vw;
+                padding: 32px 24px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ysr-video-frame {
+                aspect-ratio: 4/3;
+            }
+
+            .ysr-bento {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .ysr-tile {
+                position: relative;
+                aspect-ratio: 4/3;
+            }
+
+            .ysr-tile:nth-child(1),
+            .ysr-tile:nth-child(6) {
+                aspect-ratio: 16/9;
+            }
+        }
+
+        /* ─── DELIVERY / LOGISTICS SECTION ────────────────── */
+        .ydl {
+            --bg: #FFFFFF;
+            --ink: #111111;
+            --muted: #6B7280;
+            --amber: #FCA421;
+            --amber-10: rgba(252, 164, 33, 0.10);
+            --amber-20: rgba(252, 164, 33, 0.20);
+            --dark: #1A1A1A;
+            --rule: rgba(17, 17, 17, 0.09);
+            --shadow: 0 32px 80px rgba(17, 17, 17, 0.14);
+
+            font-family: 'Barlow', sans-serif;
+            background: var(--bg);
+            overflow: hidden;
+        }
+
+        /* ────────────────────────────────────────
+     OUTER GRID  (image | content)
+  ──────────────────────────────────────── */
+        .ydl-grid {
+            display: grid;
+            grid-template-columns: 52% 48%;
+            min-height: 740px;
+        }
+
+        /* ====================================================
+     LEFT — IMAGE COLUMN
+  ==================================================== */
+        .ydl-img-col {
+            position: relative;
+            overflow: hidden;
+            /* Diagonal right edge cuts into content column */
+            clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
+        }
+
+        /* Photo */
+        .ydl-photo {
+            position: absolute;
+            inset: 0;
+            background:
+                url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1000&q=85&fit=crop&crop=center') center/cover no-repeat;
+            transform: scale(1.04);
+            transition: transform 7s ease;
+        }
+
+        .ydl-img-col:hover .ydl-photo {
+            transform: scale(1.0);
+        }
+
+        /* Multi-layer overlay: dark base + amber diagonal wash */
+        .ydl-photo-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(160deg, rgba(26, 26, 26, 0.72) 0%, rgba(26, 26, 26, 0.30) 55%, rgba(26, 26, 26, 0.65) 100%);
+        }
+
+        /* Amber diagonal light band */
+        .ydl-photo-overlay::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg,
+                    transparent 30%,
+                    rgba(252, 164, 33, 0.08) 50%,
+                    transparent 70%);
+        }
+
+        /* ── Top tag ── */
+        .ydl-img-tag {
+            position: absolute;
+            top: 44px;
+            left: 44px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ydl-img-tag-line {
+            display: block;
+            width: 32px;
+            height: 2px;
+            background: var(--amber);
+        }
+
+        .ydl-img-tag-txt {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ── Big ghost text watermark ── */
+        .ydl-ghost {
+            position: absolute;
+            bottom: -24px;
+            left: -8px;
+            z-index: 2;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 180px;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(252, 164, 33, 0.14);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        /* ── Floating KPI badge ── */
+        .ydl-badge {
+            position: absolute;
+            bottom: 52px;
+            left: 44px;
+            z-index: 4;
+            background: var(--amber);
+            padding: 26px 32px 22px;
+            box-shadow: 0 16px 48px rgba(252, 164, 33, 0.35);
+            animation: ydl-float 4s ease-in-out infinite;
+        }
+
+        @keyframes ydl-float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .ydl-badge-val {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 58px;
+            font-weight: 900;
+            color: var(--dark);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            display: block;
+        }
+
+        .ydl-badge-sup {
+            font-size: 22px;
+            font-weight: 700;
+            vertical-align: super;
+            line-height: 0;
+        }
+
+        .ydl-badge-lbl {
+            font-family: 'Barlow', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(26, 26, 26, 0.65);
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* ── Secondary stat pill (top-right of image) ── */
+        .ydl-pill {
+            position: absolute;
+            top: 44px;
+            right: 72px;
+            /* accounts for clip-path inset */
+            z-index: 4;
+            background: rgba(26, 26, 26, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ydl-pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--amber);
+            flex-shrink: 0;
+            animation: ydl-pulse 2s ease infinite;
+        }
+
+        @keyframes ydl-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.7);
+            }
+        }
+
+        .ydl-pill-txt {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ====================================================
+     RIGHT — CONTENT COLUMN
+  ==================================================== */
+        .ydl-content {
+            padding: 80px 72px 80px 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background: var(--bg);
+        }
+
+        /* Subtle amber glow in top-right corner */
+        .ydl-content::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(252, 164, 33, 0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ── Eyebrow ── */
+        .ydl-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            opacity: 0;
+            animation: ydl-rise 0.6s ease 0.1s forwards;
+        }
+
+        .ydl-eyebrow-dash {
+            display: block;
+            width: 32px;
+            height: 2px;
+            background: var(--amber);
+            flex-shrink: 0;
+        }
+
+        .ydl-eyebrow-txt {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--amber);
+        }
+
+        /* ── Title ── */
+        .ydl-title-block {
+            margin-bottom: 14px;
+            opacity: 0;
+            animation: ydl-rise 0.65s ease 0.2s forwards;
+        }
+
+        .ydl-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(46px, 4.8vw, 68px);
+            font-weight: 900;
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: -0.015em;
+            line-height: 0.92;
+            margin: 0;
+        }
+
+        .ydl-title em {
+            font-style: italic;
+            font-weight: 300;
+            color: var(--muted);
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.72em;
+            text-transform: none;
+            letter-spacing: 0;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .ydl-title-accent {
+            color: var(--amber);
+        }
+
+        /* ── Subtitle ── */
+        .ydl-subtitle {
+            font-size: 14.5px;
+            font-weight: 400;
+            color: var(--muted);
+            line-height: 1.7;
+            margin: 0 0 52px;
+            max-width: 360px;
+            opacity: 0;
+            animation: ydl-rise 0.65s ease 0.3s forwards;
+        }
+
+        /* ── Feature rows ── */
+        .ydl-rows {
+            border-top: 1px solid var(--rule);
+        }
+
+        .ydl-row {
+            display: grid;
+            grid-template-columns: 36px 1fr 36px;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--rule);
+            cursor: default;
+            position: relative;
+            opacity: 0;
+            animation: ydl-rise 0.55s ease forwards;
+        }
+
+        .ydl-row:nth-child(1) {
+            animation-delay: 0.38s;
+        }
+
+        .ydl-row:nth-child(2) {
+            animation-delay: 0.46s;
+        }
+
+        .ydl-row:nth-child(3) {
+            animation-delay: 0.54s;
+        }
+
+        .ydl-row:nth-child(4) {
+            animation-delay: 0.62s;
+        }
+
+        /* Amber progress line that sweeps across bottom border on hover */
+        .ydl-row::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            width: 0;
+            background: var(--amber);
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .ydl-row:hover::after {
+            width: 100%;
+        }
+
+        /* Row number */
+        .ydl-row-num {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: rgba(17, 17, 17, 0.18);
+            line-height: 1;
+            transition: color 0.25s ease;
+            padding-top: 2px;
+        }
+
+        .ydl-row:hover .ydl-row-num {
+            color: var(--amber);
+        }
+
+        /* Row body */
+        .ydl-row-body {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: transform 0.25s ease;
+        }
+
+        .ydl-row:hover .ydl-row-body {
+            transform: translateX(4px);
+        }
+
+        .ydl-row-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            line-height: 1;
+        }
+
+        .ydl-row-desc {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        /* Arrow button */
+        .ydl-row-btn {
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid var(--rule);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .ydl-row:hover .ydl-row-btn {
+            background: var(--amber);
+            border-color: var(--amber);
+            transform: rotate(45deg);
+        }
+
+        .ydl-row-btn svg {
+            width: 13px;
+            height: 13px;
+            stroke: var(--muted);
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.25s ease, transform 0.25s ease;
+        }
+
+        .ydl-row:hover .ydl-row-btn svg {
+            stroke: var(--dark);
+            transform: rotate(-45deg);
+        }
+
+        /* ── Bottom micro-bar ── */
+        .ydl-meta {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            opacity: 0;
+            animation: ydl-rise 0.6s ease 0.72s forwards;
+        }
+
+        .ydl-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ydl-meta-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--amber);
+            flex-shrink: 0;
+        }
+
+        .ydl-meta-txt {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .ydl-meta-sep {
+            width: 1px;
+            height: 16px;
+            background: var(--rule);
+        }
+
+        /* ── KEYFRAMES ── */
+        @keyframes ydl-rise {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ====================================================
+     RESPONSIVE
+  ==================================================== */
+        @media (max-width: 960px) {
+            .ydl-grid {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .ydl-img-col {
+                min-height: 400px;
+                clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+            }
+
+            .ydl-ghost {
+                font-size: 120px;
+            }
+
+            .ydl-pill {
+                right: 40px;
+            }
+
+            .ydl-content {
+                padding: 64px 40px 72px;
+            }
+
+            .ydl-content::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .ydl-img-col {
+                min-height: 320px;
+            }
+
+            .ydl-badge {
+                bottom: 32px;
+                left: 28px;
+                padding: 18px 22px;
+            }
+
+            .ydl-badge-val {
+                font-size: 44px;
+            }
+
+            .ydl-img-tag {
+                left: 28px;
+                top: 28px;
+            }
+
+            .ydl-pill {
+                display: none;
+            }
+
+            .ydl-content {
+                padding: 48px 24px 60px;
+            }
+
+            .ydl-meta {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .ydl-meta-sep {
+                display: none;
+            }
+        }
+
+        /* TRUST SECTION */
+        .ysr-trust-section-enhanced {
+            font-family: 'Barlow', sans-serif;
+            background-color: #FFFFFF;
+            color: #111111;
+            margin: 0;
+            padding: 5rem 1.5rem;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            isolation: isolate;
+        }
+
+        /* subtle background accent line */
+        .ysr-trust-section-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FCA421, #FCA42120, #FCA421);
+            opacity: 0.4;
+        }
+
+        .container-enhanced {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Header with accent underline */
+        .header-enhanced {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .header-enhanced h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin: 0 0 0.75rem 0;
+            color: #111111;
+            background: linear-gradient(135deg, #111111 0%, #2c2c2c 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .accent-underline {
+            width: 80px;
+            height: 3px;
+            background: #FCA421;
+            margin: 1rem auto 1.2rem auto;
+            border-radius: 4px;
+        }
+
+        .header-enhanced .subtitle {
+            font-size: 1.2rem;
+            color: #6B7280;
+            font-weight: 500;
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* Enhanced Marquee */
+        .logo-marquee-enhanced {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 2rem 0;
+            background: #FFFFFF;
+            mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+            margin: 1rem 0 2rem;
+        }
+
+        .marquee-track-enhanced {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            animation: scrollLogosEnhanced 32s linear infinite;
+            will-change: transform;
+            gap: 0.5rem;
+        }
+
+        .logo-marquee-enhanced:hover .marquee-track-enhanced {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollLogosEnhanced {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .logo-item-enhanced {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin: 0 2rem;
+            background: #FFFFFF;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .brand-logo-enhanced {
+            max-height: 68px;
+            width: auto;
+            max-width: 140px;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+            display: block;
+        }
+
+        .logo-item-enhanced:hover {
+            transform: scale(1.02);
+            background: #fafafa;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo-item-enhanced:hover .brand-logo-enhanced {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* Testimonials - enhanced cards */
+        .testimonials-enhanced {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .card-enhanced {
+            background: #FFFFFF;
+            border-radius: 1.5rem;
+            padding: 2rem 1.75rem;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f2f5;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.02);
+            position: relative;
+            backdrop-filter: blur(0px);
+        }
+
+        .card-enhanced:hover {
+            transform: translateY(-6px);
+            border-color: #FCA42130;
+            box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px #FCA42110;
+        }
+
+        .quote-icon {
+            font-size: 2.8rem;
+            line-height: 1;
+            font-family: serif;
+            color: #FCA421;
+            opacity: 0.35;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .testimonial-text-enhanced {
+            font-size: 1rem;
+            line-height: 1.55;
+            color: #1A1A1A;
+            font-weight: 500;
+            margin: 1rem 0 1.5rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .author-enhanced {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-top: 1px solid #eef2f8;
+            padding-top: 1.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .author-avatar {
+            width: 44px;
+            height: 44px;
+            background: #FCA42110;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #FCA421;
+            font-family: 'Barlow', sans-serif;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name-enhanced {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #111111;
+            letter-spacing: -0.2px;
+            transition: color 0.2s;
+        }
+
+        .card-enhanced:hover .author-name-enhanced {
+            color: #FCA421;
+        }
+
+        .author-role-enhanced {
+            font-size: 0.8rem;
+            color: #6B7280;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+
+        /* subtle brand strip at bottom */
+        .trust-badge {
+            display: flex;
+            justify-content: center;
+            margin-top: 4rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge-item {
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #f8f9fc;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            color: #1A1A1A;
+            letter-spacing: -0.2px;
+            border: 1px solid #edf0f5;
+        }
+
+        .badge-item span {
+            color: #FCA421;
+            margin-right: 0.3rem;
+            font-weight: 800;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .ysr-trust-section-enhanced {
+                padding: 3rem 1.25rem;
+            }
+
+            .header-enhanced h2 {
+                font-size: 2.1rem;
+            }
+
+            .header-enhanced .subtitle {
+                font-size: 1rem;
+            }
+
+            .logo-item-enhanced {
+                margin: 0 1rem;
+                padding: 0.25rem 0.5rem;
+            }
+
+            .brand-logo-enhanced {
+                max-height: 48px;
+                max-width: 110px;
+            }
+
+            .testimonials-enhanced {
+                gap: 1.5rem;
+                margin-top: 2.5rem;
+            }
+
+            .card-enhanced {
+                padding: 1.5rem;
+            }
+
+            .quote-icon {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-logo-enhanced {
+                max-height: 38px;
+                max-width: 85px;
+            }
+
+            .logo-item-enhanced {
+                margin: 0 0.75rem;
+            }
+
+            .testimonial-text-enhanced {
+                font-size: 0.92rem;
+            }
+
+            .author-avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="ysr-navbar">
+        <style>
+
+        </style>
+
+        <div class="navbar-container">
+            <!-- Logo left side -->
+            <div class="navbar-logo">
+                <img src="img/logo.jpg" alt="YSR Build Junction - Construction Materials Logo">
+            </div>
+
+            <!-- Hamburger (visible on mobile) -->
+            <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu"
+                aria-expanded="false">☰</button>
+
+            <!-- Navigation wrapper: contains links + CTA -->
+            <div class="nav-links-wrapper">
+                <div class="nav-menu" id="navMenu">
+                    <ul class="nav-links">
+                        <li><a href="#" class="nav-link active" data-link="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-link="categories">Categories</a></li>
+                        <li><a href="#" class="nav-link" data-link="services">Services</a></li>
+                        <li><a href="#" class="nav-link" data-link="about">About</a></li>
+                        <li><a href="#" class="nav-link" data-link="contact">Contact</a></li>
+                    </ul>
+                    <button class="cta-button" id="ctaExploreBtn">Explore Products</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function () {
+                // DOM elements
+                const hamburger = document.getElementById('hamburgerBtn');
+                const navMenu = document.getElementById('navMenu');
+                const navLinks = document.querySelectorAll('.nav-link');
+                const ctaBtn = document.getElementById('ctaExploreBtn');
+
+                // Helper: close mobile menu if open and screen <= 768
+                function closeMobileMenu() {
+                    if (window.innerWidth <= 768 && navMenu.classList.contains('mobile-open')) {
+                        navMenu.classList.remove('mobile-open');
+                        if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                }
+
+                // Toggle mobile menu (only on <=768px)
+                function toggleMobileMenu() {
+                    if (window.innerWidth <= 768) {
+                        const isOpen = navMenu.classList.contains('mobile-open');
+                        if (isOpen) {
+                            navMenu.classList.remove('mobile-open');
+                            if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+                        } else {
+                            navMenu.classList.add('mobile-open');
+                            if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+                        }
+                    } else {
+                        // On desktop, ensure menu is always visible and no mobile class
+                        navMenu.classList.remove('mobile-open');
+                        if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                }
+
+                // Set active link style
+                function setActiveLink(activeElement) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    if (activeElement) {
+                        activeElement.classList.add('active');
+                    }
+                }
+
+                // Handle link clicks: update active state, close mobile menu if needed
+                function handleNavClick(e) {
+                    e.preventDefault();
+                    const clickedLink = e.currentTarget;
+                    setActiveLink(clickedLink);
+
+                    // Optional: smooth scroll or route simulation (just demo)
+                    // Close mobile menu after clicking any link (for better UX)
+                    if (window.innerWidth <= 768) {
+                        closeMobileMenu();
+                    }
+                }
+
+                // Attach click handlers to each nav link
+                navLinks.forEach(link => {
+                    link.addEventListener('click', handleNavClick);
+                });
+
+                // CTA button click (simple alert or demo action - can be replaced)
+                if (ctaBtn) {
+                    ctaBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        // Simulate exploration action
+                        console.log('Explore Products clicked — navigating to product catalog');
+                        alert('🚀 Explore our premium construction materials! (Demo action)');
+                    });
+                }
+
+                // Hamburger click event
+                if (hamburger) {
+                    hamburger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleMobileMenu();
+                    });
+                }
+
+                // On window resize: if screen > 768, ensure menu is visible without mobile class
+                // and reset any inline states, also close mobile class properly
+                window.addEventListener('resize', function () {
+                    if (window.innerWidth > 768) {
+                        if (navMenu.classList.contains('mobile-open')) {
+                            navMenu.classList.remove('mobile-open');
+                            if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+                        }
+                        // Ensure menu is flex row (handled by CSS)
+                    } else {
+                        // On mobile, if menu was forced closed by resize, keep closed state
+                        // no forced re-open, just ensure consistency
+                    }
+                });
+
+                // Click outside to close mobile menu (optional but enhances UX)
+                document.addEventListener('click', function (event) {
+                    const isInsideNav = event.target.closest('.ysr-navbar');
+                    if (!isInsideNav && window.innerWidth <= 768 && navMenu.classList.contains('mobile-open')) {
+                        closeMobileMenu();
+                    }
+                });
+
+                // Prevent closing when clicking inside the menu itself
+                navMenu.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+
+                // Set Home as default active (ensure active class is on Home even if no click)
+                const defaultHome = document.querySelector('.nav-link[data-link="home"]');
+                if (defaultHome && !document.querySelector('.nav-link.active')) {
+                    defaultHome.classList.add('active');
+                }
+            })();
+        </script>
+    </nav>
+
+    <!-- CATEGORIES SECTION -->
+    <div class="bj-wrap">
+
+        <div class="bj-header">
+            <div class="bj-eyebrow">
+                <span class="bj-eyebrow-line"></span>
+                <span class="bj-eyebrow-text">Product Categories</span>
+                <span class="bj-eyebrow-line"></span>
+            </div>
+            <h2 class="bj-title">Everything You Need<br>to <em>Build Right.</em></h2>
+            <p class="bj-subtitle">Sourced from certified manufacturers. Delivered to your site on time, every time.</p>
+            <div class="bj-title-underline">
+                <span class="bj-ul-dash"></span>
+                <span class="bj-ul-dot"></span>
+                <span class="bj-ul-dash2"></span>
+            </div>
+        </div>
+
+        <div class="bj-grid">
+
+            <a class="bj-card" href="#">
+                <div class="bj-card-noise"></div>
+                <div class="bj-card-stripe"></div>
+                <div class="bj-card-glow"></div>
+                <div class="bj-card-corner"></div>
+                <span class="bj-card-num">01</span>
+                <div class="bj-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                    </svg>
+                </div>
+                <span class="bj-card-tag">Structural</span>
+                <p class="bj-card-label">Cement &amp; Concrete</p>
+                <p class="bj-card-desc">OPC, PPC grades &amp; ready-mix for all structural applications.</p>
+                <div class="bj-card-cta">Browse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></div>
+            </a>
+
+            <a class="bj-card" href="#">
+                <div class="bj-card-noise"></div>
+                <div class="bj-card-stripe"></div>
+                <div class="bj-card-glow"></div>
+                <div class="bj-card-corner"></div>
+                <span class="bj-card-num">02</span>
+                <div class="bj-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+                    </svg>
+                </div>
+                <span class="bj-card-tag">Framing</span>
+                <p class="bj-card-label">Steel &amp; TMT Bars</p>
+                <p class="bj-card-desc">Fe-415 to Fe-550D rebars, sections &amp; structural profiles.</p>
+                <div class="bj-card-cta">Browse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></div>
+            </a>
+
+            <a class="bj-card" href="#">
+                <div class="bj-card-noise"></div>
+                <div class="bj-card-stripe"></div>
+                <div class="bj-card-glow"></div>
+                <div class="bj-card-corner"></div>
+                <span class="bj-card-num">03</span>
+                <div class="bj-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="2" y="7" width="20" height="4" rx="1" />
+                        <rect x="2" y="13" width="20" height="4" rx="1" />
+                        <rect x="2" y="3" width="8" height="3" rx="1" />
+                        <rect x="14" y="3" width="8" height="3" rx="1" />
+                        <rect x="2" y="18" width="8" height="3" rx="1" />
+                        <rect x="14" y="18" width="8" height="3" rx="1" />
+                    </svg>
+                </div>
+                <span class="bj-card-tag">Masonry</span>
+                <p class="bj-card-label">Bricks &amp; Blocks</p>
+                <p class="bj-card-desc">Clay, AAC, fly-ash &amp; hollow blocks in standard &amp; custom sizes.</p>
+                <div class="bj-card-cta">Browse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></div>
+            </a>
+
+            <a class="bj-card" href="#">
+                <div class="bj-card-noise"></div>
+                <div class="bj-card-stripe"></div>
+                <div class="bj-card-glow"></div>
+                <div class="bj-card-corner"></div>
+                <span class="bj-card-num">04</span>
+                <div class="bj-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="6" cy="17" r="2.5" />
+                        <circle cx="12" cy="14" r="2" />
+                        <circle cx="18" cy="17" r="2.5" />
+                        <circle cx="9" cy="11" r="1.5" />
+                        <circle cx="15" cy="10" r="2" />
+                        <circle cx="12" cy="7" r="1.5" />
+                    </svg>
+                </div>
+                <span class="bj-card-tag">Aggregates</span>
+                <p class="bj-card-label">Sand &amp; Aggregates</p>
+                <p class="bj-card-desc">M-sand, river sand, coarse &amp; fine aggregates, gravel fills.</p>
+                <div class="bj-card-cta">Browse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></div>
+            </a>
+
+            <a class="bj-card" href="#">
+                <div class="bj-card-noise"></div>
+                <div class="bj-card-stripe"></div>
+                <div class="bj-card-glow"></div>
+                <div class="bj-card-corner"></div>
+                <span class="bj-card-num">05</span>
+                <div class="bj-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 12L12 3l9 9" />
+                        <path d="M9 21V12h6v9" />
+                        <path d="M3 12h18" />
+                    </svg>
+                </div>
+                <span class="bj-card-tag">Roofing</span>
+                <p class="bj-card-label">Roofing Systems</p>
+                <p class="bj-card-desc">Metal sheets, polycarbonate, waterproofing membranes &amp; tiles.</p>
+                <div class="bj-card-cta">Browse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></div>
+            </a>
+
+            <a class="bj-card" href="#">
+                <div class="bj-card-noise"></div>
+                <div class="bj-card-stripe"></div>
+                <div class="bj-card-glow"></div>
+                <div class="bj-card-corner"></div>
+                <span class="bj-card-num">06</span>
+                <div class="bj-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+                    </svg>
+                </div>
+                <span class="bj-card-tag">Finishing</span>
+                <p class="bj-card-label">Tiles &amp; Flooring</p>
+                <p class="bj-card-desc">Vitrified, ceramic, marble, granite &amp; anti-skid floor solutions.</p>
+                <div class="bj-card-cta">Browse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></div>
+            </a>
+
+            <a class="bj-card" href="#">
+                <div class="bj-card-noise"></div>
+                <div class="bj-card-stripe"></div>
+                <div class="bj-card-glow"></div>
+                <div class="bj-card-corner"></div>
+                <span class="bj-card-num">07</span>
+                <div class="bj-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                </div>
+                <span class="bj-card-tag">MEP</span>
+                <p class="bj-card-label">Plumbing &amp; Pipes</p>
+                <p class="bj-card-desc">CPVC, uPVC, GI pipes, fittings &amp; water supply systems.</p>
+                <div class="bj-card-cta">Browse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></div>
+            </a>
+
+            <a class="bj-card" href="#">
+                <div class="bj-card-noise"></div>
+                <div class="bj-card-stripe"></div>
+                <div class="bj-card-glow"></div>
+                <div class="bj-card-corner"></div>
+                <span class="bj-card-num">08</span>
+                <div class="bj-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path
+                            d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                    </svg>
+                </div>
+                <span class="bj-card-tag">Surface</span>
+                <p class="bj-card-label">Paints &amp; Coatings</p>
+                <p class="bj-card-desc">Interior, exterior, epoxy &amp; weather-resistant protective coatings.</p>
+                <div class="bj-card-cta">Browse <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></div>
+            </a>
+
+        </div>
+
+        <div class="bj-footer">
+            <div class="bj-stats">
+                <div class="bj-stat">
+                    <span class="bj-stat-n">500+</span>
+                    <span class="bj-stat-l">Products</span>
+                </div>
+                <span class="bj-divider"></span>
+                <div class="bj-stat">
+                    <span class="bj-stat-n">40+</span>
+                    <span class="bj-stat-l">Brands</span>
+                </div>
+                <span class="bj-divider"></span>
+                <div class="bj-stat">
+                    <span class="bj-stat-n accent">ISI</span>
+                    <span class="bj-stat-l">Certified Stock</span>
+                </div>
+            </div>
+            <button class="bj-cta">
+                <span>View All Categories</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- WHO WE SERVE -->
+    <section id="ysr-ws">
+        <!-- HEADER -->
+        <div class="ws-head">
+            <div>
+                <div class="ws-head__tag"><span class="ws-head__tag-bar"></span>YSR Build Junction</div>
+                <h2 class="ws-head__h">Who We<br><em>Serve.</em></h2>
+            </div>
+            <p class="ws-head__sub">Solutions tailored for every type of builder — from ground-up construction to
+                thoughtful home upgrades.</p>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="ws-grid">
+
+            <!-- BLOCK 1 — CONTRACTORS -->
+            <div class="ws-feat">
+                <div class="ws-feat__img">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1000&q=85&fit=crop"
+                        alt="Contractor on construction site" loading="lazy" />
+                </div>
+                <div class="ws-feat__overlay"></div>
+                <div class="ws-feat__body">
+                    <div class="ws-feat__num">01 &nbsp;Contractors & Builders</div>
+                    <h3 class="ws-feat__h">Built for Those<br>Who Build.</h3>
+                    <p class="ws-feat__p">Bulk supply, site-ready delivery, and dedicated account management —
+                        engineered around the pace of your projects.</p>
+                    <div class="ws-feat__pills">
+                        <span class="ws-feat__pill">Bulk Pricing</span>
+                        <span class="ws-feat__pill">Site Delivery</span>
+                        <span class="ws-feat__pill">Trade Accounts</span>
+                    </div>
+                    <a href="#" class="ws-feat__link">
+                        Explore contractor plans
+                        <span class="ws-feat__link-arrow">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FCA421"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- BLOCK 2 — HOMEOWNERS -->
+            <div class="ws-card ws-card--a">
+                <div class="ws-card__img">
+                    <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=900&q=85&fit=crop&crop=center"
+                        alt="Homeowner planning renovation" loading="lazy" />
+                    <div class="ws-card__img-badge">Homeowners</div>
+                </div>
+                <div class="ws-card__body">
+                    <div class="ws-card__num">02 &nbsp;Homeowners</div>
+                    <h3 class="ws-card__h">Your Home,<br>Your Vision.</h3>
+                    <p class="ws-card__p">Quality materials with clear guidance — no contractor needed. From renovation
+                        to finishing touches.</p>
+                    <a href="#" class="ws-card__link">
+                        Shop for your home
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- BLOCK 3 — ARCHITECTS -->
+            <div class="ws-card ws-card--b">
+                <div class="ws-card__img">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&fit=crop&crop=top"
+                        alt="Architect reviewing blueprints" loading="lazy" />
+                    <div class="ws-card__img-badge">Architects & Designers</div>
+                </div>
+                <div class="ws-card__body">
+                    <div class="ws-card__num">03 &nbsp;Architects & Designers</div>
+                    <h3 class="ws-card__h">Specify with<br>Confidence.</h3>
+                    <p class="ws-card__p">Precision-grade materials with full spec sheets, samples, and compliance docs
+                        on demand.</p>
+                    <a href="#" class="ws-card__link">
+                        Request a spec kit
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TRUST STRIP -->
+        <div class="ws-strip">
+            <div class="ws-strip__inner">
+                <div class="ws-strip__stat">
+                    <div class="ws-strip__num">500<span>+</span></div>
+                    <div class="ws-strip__label">Trade Accounts</div>
+                </div>
+                <div class="ws-strip__divider"></div>
+                <div class="ws-strip__stat">
+                    <div class="ws-strip__num">12<span>k+</span></div>
+                    <div class="ws-strip__label">Projects Supplied</div>
+                </div>
+                <div class="ws-strip__divider"></div>
+                <div class="ws-strip__stat">
+                    <div class="ws-strip__num">98<span>%</span></div>
+                    <div class="ws-strip__label">On-Time Delivery</div>
+                </div>
+                <a href="#" class="ws-strip__cta">
+                    View All Solutions
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="ysr-services">
+        <div class="ysr-services__inner">
+
+            <!-- Header -->
+            <div class="ysr-services__header">
+                <div>
+                    <p class="ysr-services__eyebrow">What We Offer</p>
+                    <h2 class="ysr-services__title">Services That <span>Simplify</span><br>Your Build</h2>
+                    <p class="ysr-services__subtitle">From selection to delivery — we handle the complexity</p>
+                </div>
+                <div class="ysr-services__count" aria-hidden="true">04</div>
+            </div>
+
+            <!-- Cards -->
+            <div class="ysr-services__grid">
+
+                <!-- 01 Material Consultation -->
+                <article class="ysr-card">
+                    <span class="ysr-card__number">01</span>
+                    <div class="ysr-card__icon-wrap" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                            <rect x="9" y="3" width="6" height="4" rx="1" />
+                            <path d="M9 12h6M9 16h4" />
+                        </svg>
+                    </div>
+                    <h3 class="ysr-card__title">Material Consultation</h3>
+                    <p class="ysr-card__desc">Expert guidance on choosing the right materials for your project scope,
+                        budget, and structural requirements.</p>
+                    <a href="#" class="ysr-card__link">
+                        Learn More
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </article>
+
+                <!-- 02 Bulk Order Support -->
+                <article class="ysr-card">
+                    <span class="ysr-card__number">02</span>
+                    <div class="ysr-card__icon-wrap" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                            <line x1="12" y1="22.08" x2="12" y2="12" />
+                        </svg>
+                    </div>
+                    <h3 class="ysr-card__title">Bulk Order Support</h3>
+                    <p class="ysr-card__desc">Dedicated support for large-volume orders with competitive pricing,
+                        priority processing, and quality assurance.</p>
+                    <a href="#" class="ysr-card__link">
+                        Learn More
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </article>
+
+                <!-- 03 Site Delivery -->
+                <article class="ysr-card">
+                    <span class="ysr-card__number">03</span>
+                    <div class="ysr-card__icon-wrap" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="1" y="3" width="15" height="13" rx="1" />
+                            <path d="M16 8h4l3 5v3h-7V8z" />
+                            <circle cx="5.5" cy="18.5" r="2.5" />
+                            <circle cx="18.5" cy="18.5" r="2.5" />
+                        </svg>
+                    </div>
+                    <h3 class="ysr-card__title">Site Delivery</h3>
+                    <p class="ysr-card__desc">Reliable, on-schedule delivery directly to your construction site — no
+                        delays, no middlemen, no excuses.</p>
+                    <a href="#" class="ysr-card__link">
+                        Learn More
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </article>
+
+                <!-- 04 Custom Sourcing -->
+                <article class="ysr-card">
+                    <span class="ysr-card__number">04</span>
+                    <div class="ysr-card__icon-wrap" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                            <path d="M11 8v6M8 11h6" />
+                        </svg>
+                    </div>
+                    <h3 class="ysr-card__title">Custom Sourcing</h3>
+                    <p class="ysr-card__desc">Can't find what you need? We source specialty or hard-to-procure materials
+                        from our verified supplier network.</p>
+                    <a href="#" class="ysr-card__link">
+                        Learn More
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </article>
+
+            </div>
+
+            <div class="ysr-services__divider" aria-hidden="true"></div>
+        </div>
+    </section>
+
+    <!-- BENIFITS SECTION -->
+    <section class="ysr-services-section">
+
+        <div class="ysr-services-text">
+            <h2>WHY CHOOSE YSR BUILD JUNCTION</h2>
+            <p>
+                From planning to purchase, we make construction simple, reliable, and efficient.
+            </p>
+        </div>
+
+        <div class="ysr-services-con">
+
+            <div class="ysr-service-card">
+                <div class="ysr-service-icon">
+                    <i class="fa-solid fa-box"></i>
+                </div>
+                <h3>Wide Product Range</h3>
+                <p>Everything from foundation materials to finishing products — all in one place. </p>
+            </div>
+
+            <div class="ysr-service-card">
+                <div class="ysr-service-icon">
+                    <i class="fa-solid fa-cube"></i>
+                </div>
+                <h3>Trusted Quality</h3>
+                <p>Only verified brands and materials that meet industry standards.</p>
+            </div>
+
+            <div class="ysr-service-card">
+                <div class="ysr-service-icon">
+                    <i class="fa-solid fa-people-roof"></i>
+                </div>
+                <h3>Reliable Supply</h3>
+                <p>Consistent stock availability so your project never slows down.</p>
+            </div>
+
+            <div class="ysr-service-card">
+                <div class="ysr-service-icon">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <h3>Expert Guidance</h3>
+                <p>Get practical advice to choose the right materials for your needs.</p>
+            </div>
+
+            <div class="ysr-service-card">
+                <div class="ysr-service-icon">
+                    <i class="fa-solid fa-door-open"></i>
+                </div>
+                <h3>Competitive Pricing</h3>
+                <p>Best-value pricing designed for both bulk buyers and individuals.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- DELIVERY / LOGISTICS SECTION -->
+    <section class="ydl">
+        <div class="ydl-grid">
+
+            <!-- ══ LEFT: IMAGE PANEL ══ -->
+            <div class="ydl-img-col">
+                <div class="ydl-photo"></div>
+                <div class="ydl-photo-overlay"></div>
+
+                <!-- Ghost word -->
+                <span class="ydl-ghost" aria-hidden="true">Move</span>
+
+                <!-- Top left tag -->
+                <div class="ydl-img-tag">
+                    <span class="ydl-img-tag-line"></span>
+                    <span class="ydl-img-tag-txt">YSR Build Junction</span>
+                </div>
+
+                <!-- Live delivery pill -->
+                <div class="ydl-pill">
+                    <span class="ydl-pill-dot"></span>
+                    <span class="ydl-pill-txt">Live Dispatches Today</span>
+                </div>
+
+                <!-- KPI badge -->
+                <div class="ydl-badge">
+                    <span class="ydl-badge-val">48<span class="ydl-badge-sup">h</span></span>
+                    <span class="ydl-badge-lbl">Avg. Delivery Turnaround</span>
+                </div>
+            </div>
+
+            <!-- ══ RIGHT: CONTENT PANEL ══ -->
+            <div class="ydl-content">
+
+                <div class="ydl-eyebrow">
+                    <span class="ydl-eyebrow-dash"></span>
+                    <span class="ydl-eyebrow-txt">Delivery &amp; Logistics</span>
+                </div>
+
+                <div class="ydl-title-block">
+                    <h2 class="ydl-title">
+                        <em>Reliable supply for</em>
+                        On-Time,<br><span class="ydl-title-accent">Every Time.</span>
+                    </h2>
+                </div>
+
+                <p class="ydl-subtitle">
+                    From single-item orders to full-site bulk supply — dispatched fast, delivered on schedule, every
+                    project.
+                </p>
+
+                <!-- Feature rows -->
+                <div class="ydl-rows">
+
+                    <div class="ydl-row">
+                        <span class="ydl-row-num">01</span>
+                        <div class="ydl-row-body">
+                            <span class="ydl-row-title">Fast Delivery</span>
+                            <span class="ydl-row-desc">Orders dispatched within 24 hours — site-ready, no
+                                waiting.</span>
+                        </div>
+                        <div class="ydl-row-btn">
+                            <svg viewBox="0 0 14 14">
+                                <line x1="2" y1="12" x2="12" y2="2" />
+                                <polyline points="5 2 12 2 12 9" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="ydl-row">
+                        <span class="ydl-row-num">02</span>
+                        <div class="ydl-row-body">
+                            <span class="ydl-row-title">Flexible Scheduling</span>
+                            <span class="ydl-row-desc">Choose your window — we work around your project timeline.</span>
+                        </div>
+                        <div class="ydl-row-btn">
+                            <svg viewBox="0 0 14 14">
+                                <line x1="2" y1="12" x2="12" y2="2" />
+                                <polyline points="5 2 12 2 12 9" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="ydl-row">
+                        <span class="ydl-row-num">03</span>
+                        <div class="ydl-row-body">
+                            <span class="ydl-row-title">Bulk Order Handling</span>
+                            <span class="ydl-row-desc">Large-volume orders processed with priority — no delays, no
+                                excuses.</span>
+                        </div>
+                        <div class="ydl-row-btn">
+                            <svg viewBox="0 0 14 14">
+                                <line x1="2" y1="12" x2="12" y2="2" />
+                                <polyline points="5 2 12 2 12 9" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="ydl-row">
+                        <span class="ydl-row-num">04</span>
+                        <div class="ydl-row-body">
+                            <span class="ydl-row-title">Reliable Supply Chain</span>
+                            <span class="ydl-row-desc">Direct manufacturer links — consistent stock, zero surprise
+                                shortfalls.</span>
+                        </div>
+                        <div class="ydl-row-btn">
+                            <svg viewBox="0 0 14 14">
+                                <line x1="2" y1="12" x2="12" y2="2" />
+                                <polyline points="5 2 12 2 12 9" />
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Meta strip -->
+                <div class="ydl-meta">
+                    <div class="ydl-meta-item">
+                        <span class="ydl-meta-dot"></span>
+                        <span class="ydl-meta-txt">Pan-Gujarat Coverage</span>
+                    </div>
+                    <div class="ydl-meta-sep"></div>
+                    <div class="ydl-meta-item">
+                        <span class="ydl-meta-dot"></span>
+                        <span class="ydl-meta-txt">ISI Certified Stock</span>
+                    </div>
+                    <div class="ydl-meta-sep"></div>
+                    <div class="ydl-meta-item">
+                        <span class="ydl-meta-dot"></span>
+                        <span class="ydl-meta-txt">No Minimum Order</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOWROOM SHOWCASE SECTION -->
+    <section class="ysr-showroom">
+
+        <!-- Header -->
+        <div class="ysr-header">
+            <div class="ysr-eyebrow">Showroom &amp; Gallery</div>
+            <h2 class="ysr-title">Visit Our <em>Showroom</em></h2>
+            <p class="ysr-subtitle">Explore materials, finishes, and real project visuals — everything you need to build
+                with confidence.</p>
+        </div>
+
+        <!-- Video -->
+        <div class="ysr-video-section">
+            <div class="ysr-video-frame">
+
+                <!-- z-index: 0 — shown only if video fails -->
+                <div class="ysr-video-fallback">
+                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="48" height="48" rx="8" fill="white" fill-opacity="0.08" />
+                        <path d="M18 15l16 9-16 9V15z" fill="white" fill-opacity="0.4" />
+                    </svg>
+                    <span>Showroom Tour Video</span>
+                </div>
+
+                <!-- z-index: 1 — video plays above fallback, nothing blocks it -->
+                <video src="video.mp4" autoplay muted loop playsinline preload="auto"></video>
+
+                <!-- z-index: 2 — badge floats above video -->
+                <div class="ysr-vid-badge">
+                    <div class="ysr-vid-dot"></div>
+                    Live Showroom Tour
+                </div>
+
+            </div>
+
+            <div class="ysr-video-meta">
+                <span>YSR Build Junction · Full material range on display</span>
+                <a href="#">View Full Tour ›</a>
+            </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="ysr-gallery-section">
+
+            <div class="ysr-gallery-head">
+                <h3>Project Visuals &amp; <span>Finishes</span></h3>
+                <div class="ysr-filter-row">
+                    <button class="ysr-filter-btn active">All</button>
+                    <button class="ysr-filter-btn">Interiors</button>
+                    <button class="ysr-filter-btn">Exteriors</button>
+                    <button class="ysr-filter-btn">Materials</button>
+                </div>
+            </div>
+
+            <div class="ysr-bento">
+
+                <div class="ysr-tile featured">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85"
+                        alt="Modern interior" loading="lazy">
+                    <div class="ysr-tile-mask">
+                        <div class="ysr-tile-tag">Featured · Interior</div>
+                        <div class="ysr-tile-label">Modern Concrete &amp; Glass Finish</div>
+                    </div>
+                    <div class="ysr-tile-num">01</div>
+                </div>
+
+                <div class="ysr-tile">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=700&q=85"
+                        alt="Construction framework" loading="lazy">
+                    <div class="ysr-tile-mask">
+                        <div class="ysr-tile-tag">Structure</div>
+                        <div class="ysr-tile-label">Steel Framework</div>
+                    </div>
+                    <div class="ysr-tile-num">02</div>
+                </div>
+
+                <div class="ysr-tile">
+                    <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=700&q=85"
+                        alt="Porcelain tiles" loading="lazy">
+                    <div class="ysr-tile-mask">
+                        <div class="ysr-tile-tag">Finishes</div>
+                        <div class="ysr-tile-label">Porcelain Surface Range</div>
+                    </div>
+                    <div class="ysr-tile-num">03</div>
+                </div>
+
+                <div class="ysr-tile">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85"
+                        alt="Material showroom" loading="lazy">
+                    <div class="ysr-tile-mask">
+                        <div class="ysr-tile-tag">Showroom</div>
+                        <div class="ysr-tile-label">Display Wall</div>
+                    </div>
+                    <div class="ysr-tile-num">04</div>
+                </div>
+
+                <div class="ysr-tile">
+                    <img src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?w=700&q=85"
+                        alt="Luxury interior" loading="lazy">
+                    <div class="ysr-tile-mask">
+                        <div class="ysr-tile-tag">Interior</div>
+                        <div class="ysr-tile-label">Stone &amp; Marble Detail</div>
+                    </div>
+                    <div class="ysr-tile-num">05</div>
+                </div>
+
+                <div class="ysr-tile">
+                    <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=900&q=85"
+                        alt="Commercial project" loading="lazy">
+                    <div class="ysr-tile-mask">
+                        <div class="ysr-tile-tag">Exterior</div>
+                        <div class="ysr-tile-label">Commercial Build — Facade</div>
+                    </div>
+                    <div class="ysr-tile-num">06</div>
+                </div>
+
+                <div class="ysr-tile">
+                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?w=900&q=85"
+                        alt="Kitchen interior" loading="lazy">
+                    <div class="ysr-tile-mask">
+                        <div class="ysr-tile-tag">Interior</div>
+                        <div class="ysr-tile-label">Kitchen — Premium Finish</div>
+                    </div>
+                    <div class="ysr-tile-num">07</div>
+                </div>
+
+                <div class="ysr-tile">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=85"
+                        alt="Residential exterior" loading="lazy">
+                    <div class="ysr-tile-mask">
+                        <div class="ysr-tile-tag">Residential</div>
+                        <div class="ysr-tile-label">Villa Exterior — Phase 2</div>
+                    </div>
+                    <div class="ysr-tile-num">08</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="ysr-cta">
+            <div class="ysr-cta-left">
+                <h4>Ready to See It in Person?</h4>
+                <p>Walk through our showroom and speak directly with our material specialists. No pressure — just
+                    clarity.</p>
+            </div>
+            <a href="#" class="ysr-btn">
+                Book a Visit
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </a>
+        </div>
+
+        <script>
+            document.querySelectorAll('.ysr-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.ysr-filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            const vid = document.querySelector('.ysr-showroom video');
+            if (vid) {
+                vid.play().catch(() => { });
+            }
+        </script>
+
+    </section>
+
+    <!-- TRUST OR BRAND SECTION -->
+    <section class="ysr-trust-section-enhanced">
+        <div class="container-enhanced">
+            <!-- Header with accent underline -->
+            <div class="header-enhanced">
+                <h2>Trusted by Professionals</h2>
+                <div class="accent-underline"></div>
+                <p class="subtitle">Working with reliable brands and serving builders, contractors, and homeowners</p>
+            </div>
+
+            <!-- Infinite Marquee / Slider - enhanced smoothness -->
+            <div class="logo-marquee-enhanced">
+                <div class="marquee-track-enhanced">
+                    <!-- Brand logos set 1 -->
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+
+
+                    <!-- Duplicate for seamless loop -->
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
+                            alt="UltraTech Cement" loading="lazy"></div>
+                </div>
+            </div>
+
+            <!-- Subtle trust badges for added credibility -->
+            <div class="trust-badge">
+                <div class="badge-item"><span>✓</span> 500+ Projects</div>
+                <div class="badge-item"><span>✓</span> 50+ Premium Brands</div>
+                <div class="badge-item"><span>✓</span> 24/7 Support</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="ysr-faq-section">
+        <div class="faq-container">
+            <!-- Header with decorative accent -->
+            <div class="faq-header">
+                <div class="faq-header-accent"></div>
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Quick answers to help you make the right decisions</p>
+            </div>
+
+            <!-- FAQ Accordion Items -->
+            <div class="faq-items">
+                <!-- Item 1 -->
+                <div class="faq-item">
+                    <button class="faq-question-btn" aria-expanded="false">
+                        <span class="faq-question-text">Do you provide both interior and exterior materials?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, YSR Build Junction offers a comprehensive range of both interior materials (tiles,
+                            paint, flooring) and exterior materials (bricks, roofing, cladding) for all your
+                            construction needs.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="faq-item">
+                    <button class="faq-question-btn" aria-expanded="false">
+                        <span class="faq-question-text">Can I place bulk orders for large projects?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely. We cater to large-scale projects with bulk ordering options, custom pricing, and
+                            dedicated support to ensure timely fulfillment.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="faq-item">
+                    <button class="faq-question-btn" aria-expanded="false">
+                        <span class="faq-question-text">Do you offer delivery to construction sites?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, we offer reliable delivery directly to your construction site. Delivery timelines and
+                            charges depend on location and order volume; contact us for details.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="faq-item">
+                    <button class="faq-question-btn" aria-expanded="false">
+                        <span class="faq-question-text">How do I choose the right materials?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our experts can help you select based on project type, budget, and durability needs. Use our
+                            material guides or reach out to our support team.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="faq-item">
+                    <button class="faq-question-btn" aria-expanded="false">
+                        <span class="faq-question-text">Can you source custom or specific products?</span>
+                        <span class="faq-icon" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, we have a wide supplier network to source custom or specific products. Share your
+                            requirements, and we'll arrange the best solution.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            /* Google Fonts Barlow */
+            @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap');
+
+            /* Reset & Base Styles */
+            .ysr-faq-section {
+                font-family: 'Barlow', sans-serif;
+                background: #FFFFFF;
+                color: #111111;
+                margin: 0;
+                padding: 5rem 1.5rem;
+                width: 100%;
+                box-sizing: border-box;
+                position: relative;
+                isolation: isolate;
+            }
+
+            /* Subtle background texture (optional enhancement) */
+            .ysr-faq-section::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at 0% 0%, rgba(252, 164, 33, 0.02) 0%, rgba(255, 255, 255, 0) 70%);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            .faq-container {
+                max-width: 960px;
+                margin: 0 auto;
+                width: 100%;
+                position: relative;
+                z-index: 1;
+            }
+
+            /* Enhanced Header */
+            .faq-header {
+                text-align: center;
+                margin-bottom: 3.5rem;
+                position: relative;
+            }
+
+            .faq-header-accent {
+                width: 60px;
+                height: 4px;
+                background: #FCA421;
+                border-radius: 4px;
+                margin: 0 auto 1.25rem auto;
+            }
+
+            .faq-title {
+                font-size: 2.5rem;
+                font-weight: 800;
+                color: #111111;
+                margin: 0 0 0.75rem 0;
+                letter-spacing: -0.02em;
+                line-height: 1.2;
+            }
+
+            .faq-subtitle {
+                font-size: 1.2rem;
+                color: #6B7280;
+                font-weight: 500;
+                margin: 0;
+                line-height: 1.5;
+            }
+
+            /* FAQ Items Layout */
+            .faq-items {
+                display: flex;
+                flex-direction: column;
+                gap: 1.25rem;
+            }
+
+            .faq-item {
+                background: #FFFFFF;
+                border-radius: 1.25rem;
+                border: 1px solid #EFF3F6;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+                transition: all 0.25s ease;
+                overflow: hidden;
+            }
+
+            .faq-item:hover {
+                border-color: #E2E8F0;
+                box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.02);
+            }
+
+            /* Active item: accent border and enhanced shadow */
+            .faq-item.active {
+                border-left: 4px solid #FCA421;
+                border-radius: 1.25rem;
+                box-shadow: 0 16px 32px -12px rgba(252, 164, 33, 0.12), 0 4px 12px -4px rgba(0, 0, 0, 0.05);
+            }
+
+            /* Question Button */
+            .faq-question-btn {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                background: transparent;
+                border: none;
+                padding: 1.5rem 1.75rem;
+                cursor: pointer;
+                font-family: 'Barlow', sans-serif;
+                font-size: 1.125rem;
+                font-weight: 600;
+                color: #111111;
+                text-align: left;
+                transition: all 0.2s ease;
+                border-radius: 1.25rem;
+            }
+
+            .faq-question-btn:focus-visible {
+                outline: 2px solid #FCA421;
+                outline-offset: 2px;
+                border-radius: 1rem;
+            }
+
+            .faq-question-text {
+                flex: 1;
+                padding-right: 1rem;
+                line-height: 1.4;
+                transition: color 0.2s;
+            }
+
+            /* Icon styling with smooth transition */
+            .faq-icon {
+                font-size: 1.5rem;
+                font-weight: 500;
+                color: #9CA3AF;
+                transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                line-height: 1;
+                user-select: none;
+                background: #F9FAFB;
+                width: 28px;
+                height: 28px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                font-size: 1.3rem;
+            }
+
+            /* Active icon styling */
+            .faq-item.active .faq-icon {
+                background: rgba(252, 164, 33, 0.12);
+                color: #FCA421;
+                font-weight: 600;
+                transform: rotate(90deg);
+            }
+
+            /* Hover effect on icon */
+            .faq-question-btn:hover .faq-icon {
+                background: rgba(252, 164, 33, 0.08);
+                color: #FCA421;
+                transform: scale(1.05);
+            }
+
+            .faq-item.active .faq-question-btn:hover .faq-icon {
+                transform: rotate(90deg) scale(1.05);
+            }
+
+            /* Answer container with smoother animation */
+            .faq-answer {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+                background: #FFFFFF;
+                border-radius: 0 0 1.25rem 1.25rem;
+            }
+
+            .faq-answer-content {
+                padding: 0 1.75rem 1.75rem 1.75rem;
+                font-size: 1rem;
+                line-height: 1.6;
+                color: #4B5563;
+                font-weight: 400;
+                border-top: none;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+                .ysr-faq-section {
+                    padding: 3rem 1.25rem;
+                }
+
+                .faq-title {
+                    font-size: 2rem;
+                }
+
+                .faq-subtitle {
+                    font-size: 1rem;
+                }
+
+                .faq-question-btn {
+                    padding: 1.25rem 1.25rem;
+                    font-size: 1rem;
+                }
+
+                .faq-answer-content {
+                    padding: 0 1.25rem 1.25rem 1.25rem;
+                    font-size: 0.95rem;
+                }
+
+                .faq-icon {
+                    width: 26px;
+                    height: 26px;
+                    font-size: 1.2rem;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .faq-title {
+                    font-size: 1.75rem;
+                }
+
+                .faq-question-btn {
+                    padding: 1rem 1rem;
+                }
+
+                .faq-answer-content {
+                    padding: 0 1rem 1rem 1rem;
+                }
+            }
+        </style>
+
+        <script>
+            (function () {
+                // Initialize all FAQ items
+                const faqItems = document.querySelectorAll('.faq-item');
+
+                function toggleFaqItem(item, isExpanded) {
+                    const button = item.querySelector('.faq-question-btn');
+                    const iconSpan = item.querySelector('.faq-icon');
+                    const answer = item.querySelector('.faq-answer');
+
+                    if (isExpanded) {
+                        item.classList.add('active');
+                        button.setAttribute('aria-expanded', 'true');
+                        if (iconSpan) iconSpan.textContent = '−';
+                        // Set max-height for smooth transition
+                        const contentHeight = answer.querySelector('.faq-answer-content').scrollHeight;
+                        answer.style.maxHeight = contentHeight + 40 + 'px';
+                    } else {
+                        item.classList.remove('active');
+                        button.setAttribute('aria-expanded', 'false');
+                        if (iconSpan) iconSpan.textContent = '+';
+                        answer.style.maxHeight = null;
+                    }
+                }
+
+                function setupFaqItem(item) {
+                    const button = item.querySelector('.faq-question-btn');
+                    if (!button) return;
+
+                    // Ensure initial state is collapsed
+                    if (item.classList.contains('active')) {
+                        item.classList.remove('active');
+                        const iconSpan = item.querySelector('.faq-icon');
+                        if (iconSpan) iconSpan.textContent = '+';
+                        const answer = item.querySelector('.faq-answer');
+                        if (answer) answer.style.maxHeight = null;
+                        button.setAttribute('aria-expanded', 'false');
+                    }
+
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const isActive = item.classList.contains('active');
+                        toggleFaqItem(item, !isActive);
+                    });
+                }
+
+                // Initialize each FAQ item
+                faqItems.forEach(item => setupFaqItem(item));
+
+                // Adjust max-height on window resize for open items
+                let resizeTimer;
+                window.addEventListener('resize', function () {
+                    if (resizeTimer) clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => {
+                        document.querySelectorAll('.faq-item.active').forEach(activeItem => {
+                            const answer = activeItem.querySelector('.faq-answer');
+                            if (answer && answer.style.maxHeight && answer.style.maxHeight !== '') {
+                                const newHeight = answer.querySelector('.faq-answer-content').scrollHeight;
+                                answer.style.maxHeight = newHeight + 40 + 'px';
+                            }
+                        });
+                    }, 150);
+                });
+            })();
+        </script>
+    </section>
+
+    <!-- CONTACT US SECTION -->
+
+
+    <!-- CTA SECTION -->
+    <style>
+        /* Import Barlow font */
+        @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap');
+
+        /* Reset & base styles (only for the component context) */
+        .cta-box * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Main CTA box: centered, max-width, dark theme, rounded corners, shadow */
+        .cta-box {
+            max-width: 780px;
+            width: 90%;
+            margin: 2rem auto;
+            background: #1A1A1A;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(252, 164, 33, 0.12);
+            padding: 2.8rem 2.5rem;
+            text-align: center;
+            font-family: 'Barlow', sans-serif;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* subtle lift on hover for premium feel */
+        .cta-box:hover {
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(252, 164, 33, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* brand label / YSR Build Junction */
+        .brand-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #FCA421;
+            background: rgba(252, 164, 33, 0.12);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            margin-bottom: 1.25rem;
+            backdrop-filter: blur(2px);
+        }
+
+        /* Headline style */
+        .headline {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 700;
+            line-height: 1.2;
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        /* Subtext style (secondary text) */
+        .subtext {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #B0B0B0;
+            max-width: 480px;
+            margin: 0 auto 2rem auto;
+            font-weight: 500;
+        }
+
+        /* button group - flex, centered, responsive */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Base button styling */
+        .btn {
+            display: inline-block;
+            font-family: 'Barlow', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.25s ease-in-out;
+            cursor: pointer;
+            border: 2px solid transparent;
+            letter-spacing: 0.3px;
+        }
+
+        /* Primary button - accent background, dark text for contrast */
+        .btn-primary {
+            background: #FCA421;
+            color: #1A1A1A;
+            box-shadow: 0 6px 14px rgba(252, 164, 33, 0.25);
+            border: 2px solid #FCA421;
+        }
+
+        .btn-primary:hover {
+            background: #e08e0c;
+            border-color: #e08e0c;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px -8px rgba(252, 164, 33, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+
+        /* Secondary button - outline with accent border & text */
+        .btn-secondary {
+            background: transparent;
+            color: #FCA421;
+            border: 2px solid #FCA421;
+        }
+
+        .btn-secondary:hover {
+            background: #FCA421;
+            color: #1A1A1A;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(252, 164, 33, 0.2);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(1px);
+        }
+
+        /* focus accessibility */
+        .btn:focus-visible {
+            outline: 3px solid #FCA421;
+            outline-offset: 3px;
+            border-radius: 50px;
+        }
+
+        /* Responsive: stack buttons on smaller screens, adjust padding */
+        @media (max-width: 550px) {
+            .cta-box {
+                padding: 2rem 1.5rem;
+                border-radius: 28px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+                padding: 0.85rem 1.5rem;
+            }
+
+            .subtext {
+                font-size: 1rem;
+                margin-bottom: 1.8rem;
+            }
+
+            .brand-tag {
+                font-size: 0.7rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* extra fine-tuning for very large screens -> keep max-width constraint */
+        @media (min-width: 1400px) {
+            .cta-box {
+                max-width: 860px;
+            }
+        }
+    </style>
+    <div class="cta-box">
+        <!-- Brand identifier, subtle and premium -->
+        <div class="brand-tag">YSR BUILD JUNCTION</div>
+
+        <!-- Headline as required -->
+        <h2 class="headline">Everything You Need to Build — All in One Place</h2>
+
+        <!-- Subtext exactly as specified -->
+        <p class="subtext">Explore materials and simplify your construction process</p>
+
+        <!-- Dual CTA Buttons with strong emphasis -->
+        <div class="button-group">
+            <a href="#" class="btn btn-primary">Explore Products</a>
+            <a href="#" class="btn btn-secondary">Contact Us</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="ysr-footer">
+        <style>
+            .ysr-footer * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .ysr-footer {
+                font-family: 'Barlow', sans-serif;
+                position: relative;
+                background-color: #FCA421;
+                /* Subtle construction diagonal texture pattern */
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0 L60 60 M60 0 L0 60' stroke='rgba(0,0,0,0.1)' stroke-width='1.2' fill='none' /%3E%3C/svg%3E");
+                background-repeat: repeat;
+                color: #FFFFFF;
+                width: 100%;
+                margin-top: auto;
+            }
+
+            /* Minor dark overlay on background */
+            .ysr-footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.25);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            .footer-container {
+                position: relative;
+                z-index: 2;
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 3rem 2rem 2rem;
+            }
+
+            /* grid layout */
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 2.5rem;
+                margin-bottom: 2.5rem;
+            }
+
+            /* brand area - logo on top, then company name, then description */
+            .brand-info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .brand-logo-img {
+                width: 100px;
+                height: 48px;
+                background: #1A1A1A;
+                border-radius: 12px;
+                object-fit: cover;
+                margin-bottom: 1rem;
+            }
+
+            .company-name {
+                font-size: 1.9rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                margin-bottom: 0.75rem;
+                color: #FFFFFF;
+                line-height: 1.2;
+            }
+
+            .brand-description {
+                color: rgba(255, 255, 255, 0.9);
+                line-height: 1.45;
+                font-size: 0.95rem;
+                max-width: 280px;
+            }
+
+            /* headings */
+            .footer-heading {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-bottom: 1.25rem;
+                letter-spacing: -0.2px;
+                color: #FFFFFF;
+                position: relative;
+                display: inline-block;
+            }
+
+            .footer-heading:after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+                width: 32px;
+                height: 2px;
+                background: #FFFFFF;
+                opacity: 0.4;
+                border-radius: 2px;
+            }
+
+            /* quick links list */
+            .quick-links {
+                list-style: none;
+            }
+
+            .quick-links li {
+                margin-bottom: 0.75rem;
+            }
+
+            .quick-links a {
+                color: rgba(255, 255, 255, 0.85);
+                text-decoration: none;
+                transition: all 0.2s ease;
+                font-weight: 500;
+                font-size: 0.95rem;
+                display: inline-block;
+            }
+
+            .quick-links a:hover {
+                color: #FFFFFF;
+                transform: translateX(4px);
+                opacity: 1;
+            }
+
+            /* contact info list */
+            .contact-list {
+                list-style: none;
+            }
+
+            .contact-list li {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 1rem;
+                color: rgba(255, 255, 255, 0.85);
+                font-size: 0.95rem;
+                line-height: 1.4;
+            }
+
+            .contact-list i {
+                width: 20px;
+                font-size: 1rem;
+                text-align: center;
+                color: #FFFFFF;
+                opacity: 0.9;
+            }
+
+            .contact-list a {
+                color: rgba(255, 255, 255, 0.85);
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+
+            .contact-list a:hover {
+                color: #FFFFFF;
+            }
+
+            /* bottom bar with dark accent */
+            .footer-bottom {
+                background-color: #1A1A1A;
+                border-radius: 16px;
+                padding: 1rem 1.5rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .copyright {
+                font-size: 0.85rem;
+                color: rgba(255, 255, 255, 0.7);
+                letter-spacing: 0.3px;
+            }
+
+            .social-icons {
+                display: flex;
+                gap: 1.2rem;
+                align-items: center;
+            }
+
+            .social-icons a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                transition: transform 0.2s ease, opacity 0.2s;
+                opacity: 0.8;
+                color: #FFFFFF;
+                font-size: 1.2rem;
+                text-decoration: none;
+            }
+
+            .social-icons a:hover {
+                transform: translateY(-2px);
+                opacity: 1;
+            }
+
+            /* responsive adjustments */
+            @media (max-width: 768px) {
+                .footer-container {
+                    padding: 2rem 1.5rem 1.5rem;
+                }
+
+                .footer-grid {
+                    gap: 2rem;
+                }
+
+                .footer-bottom {
+                    flex-direction: column;
+                    text-align: center;
+                    padding: 1rem 1.2rem;
+                }
+
+                .brand-description {
+                    max-width: 100%;
+                }
+
+                .brand-info {
+                    align-items: center;
+                    text-align: center;
+                }
+
+                .footer-heading:after {
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+
+                .footer-heading {
+                    display: block;
+                    text-align: center;
+                }
+
+                .quick-links {
+                    text-align: center;
+                }
+
+                .contact-list li {
+                    justify-content: center;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .footer-grid {
+                    grid-template-columns: 1fr;
+                    text-align: center;
+                }
+
+                .contact-list li {
+                    justify-content: flex-start;
+                    text-align: left;
+                }
+
+                .footer-heading:after {
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
+        </style>
+
+        <div class="footer-container">
+            <div class="footer-grid">
+                <!-- First column: logo (top), then company name, then description -->
+                <div class="brand-info">
+                    <img class="brand-logo-img" src="img/logo.jpg"
+                        alt="YSR Build Junction Logo (replace with actual JPG)">
+                    <div class="company-name">YSR Build Junction</div>
+                    <p class="brand-description">
+                        Premium construction materials & reliable supply chain solutions.
+                        From foundations to finishing — we deliver excellence for every project.
+                    </p>
+                </div>
+
+                <!-- Quick Links column -->
+                <div>
+                    <h3 class="footer-heading">Quick Links</h3>
+                    <ul class="quick-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info column with FontAwesome icons -->
+                <div>
+                    <h3 class="footer-heading">Contact Info</h3>
+                    <ul class="contact-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>YSR Buildjunction, Bhavnagar, Gujarat, India</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+919876543210">+91 9876543210</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:info@ysrbuildjunction.com">info@ysrbuildjunction.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <p>Monday to Saturday: 9:00 AM – 7:00 PM <br></p>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- bottom bar with copyright + social icons (FontAwesome) -->
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2026 YSR Build Junction. All rights reserved.
+                </div>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.ysr-text-swiper', {
+            direction: 'vertical',
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            speed: 800,
+        });
+
+        // Counting Card JS 
+        let counted = false;
+
+        window.onscroll = function () {
+            const section = document.querySelector('.ysr-hero-data-section');
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (!counted && sectionTop < windowHeight) {
+                counted = true;
+
+                function countUp(id, target) {
+                    let current = 0;
+                    const interval = setInterval(() => {
+                        current++;
+                        document.getElementById(id).innerText = current;
+                        if (current >= target) clearInterval(interval);
+                    }, 50);
+                }
+
+                countUp('firstCard', 30);
+                countUp('secondCard', 40);
+                countUp('thirdCard', 25);
+            }
+        };
+    </script>
+
+</body>
+
+</html>
