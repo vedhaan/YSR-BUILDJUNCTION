@@ -2836,18 +2836,13 @@
 
         /* TRUST SECTION */
         .ysr-trust-section-enhanced {
-            font-family: 'Barlow', sans-serif;
-            background-color: #FFFFFF;
-            color: #111111;
-            margin: 0;
-            padding: 5rem 1.5rem;
-            width: 100%;
-            box-sizing: border-box;
+            background: #fff;
+            padding: 4rem 1.5rem;
             position: relative;
             isolation: isolate;
+            overflow: hidden;
         }
 
-        /* subtle background accent line */
         .ysr-trust-section-enhanced::before {
             content: '';
             position: absolute;
@@ -2862,24 +2857,19 @@
         .container-enhanced {
             max-width: 1280px;
             margin: 0 auto;
-            width: 100%;
         }
 
-        /* Header with accent underline */
         .header-enhanced {
             text-align: center;
-            margin-bottom: 3.5rem;
+            margin-bottom: 3rem;
         }
 
         .header-enhanced h2 {
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            margin: 0 0 0.75rem 0;
-            color: #111111;
-            background: linear-gradient(135deg, #111111 0%, #2c2c2c 100%);
-            background-clip: text;
+            background: linear-gradient(135deg, #111 0%, #2c2c2c 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
             display: inline-block;
         }
@@ -2888,45 +2878,64 @@
             width: 80px;
             height: 3px;
             background: #FCA421;
-            margin: 1rem auto 1.2rem auto;
+            margin: 0.75rem auto 1rem;
             border-radius: 4px;
         }
 
         .header-enhanced .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #6B7280;
             font-weight: 500;
-            max-width: 680px;
+            max-width: 600px;
             margin: 0 auto;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
-        /* Enhanced Marquee */
-        .logo-marquee-enhanced {
+        /* ── MARQUEE WRAPPER ─────────────────────────────────── */
+        .marquee-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+            /* Fade edges — applied once here, not per-row */
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+        }
+
+        /* ── SINGLE ROW ──────────────────────────────────────── */
+        .logo-marquee-row {
             position: relative;
             width: 100%;
             overflow: hidden;
-            padding: 2rem 0;
-            background: #FFFFFF;
-            mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-            margin: 1rem 0 2rem;
+            /* clip only, no mask here */
+            display: flex;
         }
 
-        .marquee-track-enhanced {
+        .marquee-track {
             display: flex;
             align-items: center;
             width: max-content;
-            animation: scrollLogosEnhanced 32s linear infinite;
+            gap: 0;
+            /* KEY: animation starts at 0, ends at -50% — exactly one full set width */
             will-change: transform;
-            gap: 0.5rem;
         }
 
-        .logo-marquee-enhanced:hover .marquee-track-enhanced {
+        /* Forward row */
+        .marquee-track--forward {
+            animation: marqueeForward 30s linear infinite;
+        }
+
+        /* Reverse row */
+        .marquee-track--reverse {
+            animation: marqueeReverse 30s linear infinite;
+        }
+
+        /* Pause on hover */
+        .logo-marquee-row:hover .marquee-track {
             animation-play-state: paused;
         }
 
-        @keyframes scrollLogosEnhanced {
+        @keyframes marqueeForward {
             0% {
                 transform: translateX(0);
             }
@@ -2936,33 +2945,45 @@
             }
         }
 
+        @keyframes marqueeReverse {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* ── LOGO ITEM ───────────────────────────────────────── */
         .logo-item-enhanced {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            margin: 0 2rem;
-            background: #FFFFFF;
-            padding: 0.5rem 1rem;
+            margin: 0 1.75rem;
+            padding: 0.4rem 0.9rem;
             border-radius: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .brand-logo-enhanced {
-            max-height: 68px;
-            width: auto;
-            max-width: 140px;
-            object-fit: contain;
-            filter: grayscale(100%);
-            opacity: 0.7;
-            transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
-            display: block;
+            background: #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .logo-item-enhanced:hover {
-            transform: scale(1.02);
-            background: #fafafa;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transform: scale(1.05);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        }
+
+        .brand-logo-enhanced {
+            max-height: 60px;
+            width: auto;
+            max-width: 130px;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.65;
+            transition: filter 0.35s ease, opacity 0.35s ease;
+            display: block;
+            /* CRITICAL: prevent layout shift on load */
+            min-width: 60px;
         }
 
         .logo-item-enhanced:hover .brand-logo-enhanced {
@@ -2970,102 +2991,11 @@
             opacity: 1;
         }
 
-        /* Testimonials - enhanced cards */
-        .testimonials-enhanced {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
-        .card-enhanced {
-            background: #FFFFFF;
-            border-radius: 1.5rem;
-            padding: 2rem 1.75rem;
-            transition: all 0.3s ease;
-            border: 1px solid #f0f2f5;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.02);
-            position: relative;
-            backdrop-filter: blur(0px);
-        }
-
-        .card-enhanced:hover {
-            transform: translateY(-6px);
-            border-color: #FCA42130;
-            box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px #FCA42110;
-        }
-
-        .quote-icon {
-            font-size: 2.8rem;
-            line-height: 1;
-            font-family: serif;
-            color: #FCA421;
-            opacity: 0.35;
-            margin-bottom: 0.5rem;
-            font-weight: 400;
-        }
-
-        .testimonial-text-enhanced {
-            font-size: 1rem;
-            line-height: 1.55;
-            color: #1A1A1A;
-            font-weight: 500;
-            margin: 1rem 0 1.5rem 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .author-enhanced {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            border-top: 1px solid #eef2f8;
-            padding-top: 1.25rem;
-            margin-top: 0.5rem;
-        }
-
-        .author-avatar {
-            width: 44px;
-            height: 44px;
-            background: #FCA42110;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #FCA421;
-            font-family: 'Barlow', sans-serif;
-        }
-
-        .author-info {
-            flex: 1;
-        }
-
-        .author-name-enhanced {
-            font-weight: 800;
-            font-size: 1.05rem;
-            color: #111111;
-            letter-spacing: -0.2px;
-            transition: color 0.2s;
-        }
-
-        .card-enhanced:hover .author-name-enhanced {
-            color: #FCA421;
-        }
-
-        .author-role-enhanced {
-            font-size: 0.8rem;
-            color: #6B7280;
-            font-weight: 500;
-            letter-spacing: 0.2px;
-        }
-
-        /* subtle brand strip at bottom */
+        /* Trust badges */
         .trust-badge {
             display: flex;
             justify-content: center;
-            margin-top: 4rem;
+            margin-top: 3rem;
             gap: 1rem;
             flex-wrap: wrap;
         }
@@ -3077,7 +3007,6 @@
             padding: 0.4rem 1rem;
             border-radius: 40px;
             color: #1A1A1A;
-            letter-spacing: -0.2px;
             border: 1px solid #edf0f5;
         }
 
@@ -3087,62 +3016,19 @@
             font-weight: 800;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            .ysr-trust-section-enhanced {
-                padding: 3rem 1.25rem;
-            }
-
             .header-enhanced h2 {
-                font-size: 2.1rem;
+                font-size: 1.8rem;
             }
 
-            .header-enhanced .subtitle {
-                font-size: 1rem;
+            .brand-logo-enhanced {
+                max-height: 44px;
+                max-width: 100px;
+                min-width: 44px;
             }
 
             .logo-item-enhanced {
                 margin: 0 1rem;
-                padding: 0.25rem 0.5rem;
-            }
-
-            .brand-logo-enhanced {
-                max-height: 48px;
-                max-width: 110px;
-            }
-
-            .testimonials-enhanced {
-                gap: 1.5rem;
-                margin-top: 2.5rem;
-            }
-
-            .card-enhanced {
-                padding: 1.5rem;
-            }
-
-            .quote-icon {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .brand-logo-enhanced {
-                max-height: 38px;
-                max-width: 85px;
-            }
-
-            .logo-item-enhanced {
-                margin: 0 0.75rem;
-            }
-
-            .testimonial-text-enhanced {
-                font-size: 0.92rem;
-            }
-
-            .author-avatar {
-                width: 38px;
-                height: 38px;
-                font-size: 1rem;
             }
         }
     </style>
@@ -4111,61 +3997,223 @@
     <!-- TRUST OR BRAND SECTION -->
     <section class="ysr-trust-section-enhanced">
         <div class="container-enhanced">
-            <!-- Header with accent underline -->
+
             <div class="header-enhanced">
                 <h2>Trusted by Professionals</h2>
                 <div class="accent-underline"></div>
                 <p class="subtitle">Working with reliable brands and serving builders, contractors, and homeowners</p>
             </div>
 
-            <!-- Infinite Marquee / Slider - enhanced smoothness -->
-            <div class="logo-marquee-enhanced">
-                <div class="marquee-track-enhanced">
-                    <!-- Brand logos set 1 -->
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
+            <div class="marquee-wrapper">
 
-
-                    <!-- Duplicate for seamless loop -->
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
-                    <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="tata-steel7114.jpg"
-                            alt="UltraTech Cement" loading="lazy"></div>
+                <!-- ROW 1 — Forward -->
+                <div class="logo-marquee-row">
+                    <div class="marquee-track marquee-track--forward">
+                        <!-- Set 1 -->
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/ambuja-logo.png" alt="Ambuja"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/asianpaints_logo.jpg" alt="Asian Paints"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/berger.png"
+                                alt="Berger"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/birla_white.jpg" alt="CERA"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/cera.png"
+                                alt="Finolex Cables"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/dr-fixit.jpg"
+                                alt="Havells"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/Duraguard-Logo.png" alt="Indigo Paints"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/elleyes.png"
+                                alt="Dr Fixit"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/finolex-cables-logo.png" alt="Ambuja 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/Finolex-Pipes-.png" alt="Asian Paints 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/hevells.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/hifi.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/indigo.png"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/magicriete.jpg" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/nirali.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/Pare.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/roff.webp"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/RR-Kabel-Logo.png" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/rudra-tmx-logo.jpg" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/sinex.webp"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/somanny.png"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/tridevtmx.png" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/uma.png"
+                                alt="Berger 2"></div>
+                        <!-- Set 2 — exact duplicate for seamless loop -->
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/ambuja-logo.png" alt="Ambuja"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/asianpaints_logo.jpg" alt="Asian Paints"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/berger.png"
+                                alt="Berger"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/birla_white.jpg" alt="CERA"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/cera.png"
+                                alt="Finolex Cables"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/dr-fixit.jpg"
+                                alt="Havells"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/Duraguard-Logo.png" alt="Indigo Paints"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/elleyes.png"
+                                alt="Dr Fixit"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/finolex-cables-logo.png" alt="Ambuja 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/Finolex-Pipes-.png" alt="Asian Paints 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/hevells.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/hifi.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/indigo.png"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/magicriete.jpg" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/nirali.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/Pare.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/roff.webp"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/RR-Kabel-Logo.png" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/rudra-tmx-logo.jpg" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/sinex.webp"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/somanny.png"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/tridevtmx.png" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/uma.png"
+                                alt="Berger 2"></div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Subtle trust badges for added credibility -->
+                <!-- ROW 2 — Reverse -->
+                <div class="logo-marquee-row">
+                    <div class="marquee-track marquee-track--reverse">
+                        <!-- Set 1 -->
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/ambuja-logo.png" alt="Ambuja"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/asianpaints_logo.jpg" alt="Asian Paints"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/berger.png"
+                                alt="Berger"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/birla_white.jpg" alt="CERA"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/cera.png"
+                                alt="Finolex Cables"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/dr-fixit.jpg"
+                                alt="Havells"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/Duraguard-Logo.png" alt="Indigo Paints"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/elleyes.png"
+                                alt="Dr Fixit"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/finolex-cables-logo.png" alt="Ambuja 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/Finolex-Pipes-.png" alt="Asian Paints 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/hevells.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/hifi.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/indigo.png"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/magicriete.jpg" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/nirali.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/Pare.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/roff.webp"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/RR-Kabel-Logo.png" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/rudra-tmx-logo.jpg" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/sinex.webp"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/somanny.png"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/tridevtmx.png" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/uma.png"
+                                alt="Berger 2"></div>
+                        <!-- Set 2 — exact duplicate -->
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/ambuja-logo.png" alt="Ambuja"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/asianpaints_logo.jpg" alt="Asian Paints"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/berger.png"
+                                alt="Berger"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/birla_white.jpg" alt="CERA"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/cera.png"
+                                alt="Finolex Cables"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/dr-fixit.jpg"
+                                alt="Havells"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/Duraguard-Logo.png" alt="Indigo Paints"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/elleyes.png"
+                                alt="Dr Fixit"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/finolex-cables-logo.png" alt="Ambuja 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/Finolex-Pipes-.png" alt="Asian Paints 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/hevells.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/hifi.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/indigo.png"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/magicriete.jpg" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/nirali.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/Pare.jpg"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/roff.webp"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/RR-Kabel-Logo.png" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/rudra-tmx-logo.jpg" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/sinex.webp"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/somanny.png"
+                                alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced"
+                                src="img/partners/tridevtmx.png" alt="Berger 2"></div>
+                        <div class="logo-item-enhanced"><img class="brand-logo-enhanced" src="img/partners/uma.png"
+                                alt="Berger 2"></div>
+                    </div>
+                </div>
+
+            </div><!-- end marquee-wrapper -->
+
             <div class="trust-badge">
                 <div class="badge-item"><span>✓</span> 500+ Projects</div>
                 <div class="badge-item"><span>✓</span> 50+ Premium Brands</div>
                 <div class="badge-item"><span>✓</span> 24/7 Support</div>
             </div>
+
         </div>
     </section>
 
@@ -4550,665 +4598,1090 @@
     </section>
 
     <!-- CONTACT US SECTION -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet"/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap"
+        rel="stylesheet" />
 
-<section id="ysr-contact">
-<style>
-#ysr-contact{
-  --bg:#fff;
-  --txt:#111;
-  --sub:#6B7280;
-  --acc:#FCA421;
-  --acc2:#F97316;
-  --dark:#1A1A1A;
-  --card:#FAFAFA;
-  --bdr:#E5E7EB;
-  --err:#EF4444;
-  --ok:#10B981;
-  font-family:'Barlow',sans-serif;
-  background:var(--bg);
-  color:var(--txt);
-  position:relative;
-  overflow:hidden;
-  padding:120px 24px 100px;
-  isolation:isolate;
-}
-#ysr-contact *,#ysr-contact *::before,#ysr-contact *::after{box-sizing:border-box;margin:0;padding:0}
+    <section id="ysr-contact">
+        <style>
+            #ysr-contact {
+                --bg: #fff;
+                --txt: #111;
+                --sub: #6B7280;
+                --acc: #FCA421;
+                --acc2: #F97316;
+                --dark: #1A1A1A;
+                --card: #FAFAFA;
+                --bdr: #E5E7EB;
+                --err: #EF4444;
+                --ok: #10B981;
+                font-family: 'Barlow', sans-serif;
+                background: var(--bg);
+                color: var(--txt);
+                position: relative;
+                overflow: hidden;
+                padding: 120px 24px 100px;
+                isolation: isolate;
+            }
 
-/* ─── BACKGROUND ─── */
-#ysr-contact .c-grid{
-  position:absolute;inset:0;z-index:0;
-  background-image:
-    linear-gradient(rgba(17,17,17,.045) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(17,17,17,.045) 1px,transparent 1px);
-  background-size:52px 52px;
-}
-#ysr-contact .c-blob{
-  position:absolute;right:-120px;top:-60px;
-  width:560px;height:560px;border-radius:50%;
-  background:radial-gradient(circle,rgba(252,164,33,.10) 0%,transparent 70%);
-  z-index:0;pointer-events:none;
-}
-#ysr-contact .c-blob2{
-  position:absolute;left:-80px;bottom:-100px;
-  width:380px;height:380px;border-radius:50%;
-  background:radial-gradient(circle,rgba(252,164,33,.06) 0%,transparent 70%);
-  z-index:0;pointer-events:none;
-}
-/* Left accent spine */
-#ysr-contact .c-spine{
-  position:absolute;left:0;top:0;bottom:0;width:5px;
-  background:linear-gradient(180deg,var(--acc) 0%,var(--acc2) 100%);
-  z-index:1;
-}
-/* Top-right bracket deco */
-#ysr-contact .c-bracket{
-  position:absolute;top:48px;right:48px;
-  width:56px;height:56px;
-  border-top:3px solid var(--acc);
-  border-right:3px solid var(--acc);
-  opacity:.4;z-index:1;
-}
-#ysr-contact .c-bracket2{
-  position:absolute;bottom:48px;left:64px;
-  width:40px;height:40px;
-  border-bottom:3px solid var(--acc);
-  border-left:3px solid var(--acc);
-  opacity:.25;z-index:1;
-}
+            #ysr-contact *,
+            #ysr-contact *::before,
+            #ysr-contact *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0
+            }
 
-/* ─── WRAPPER ─── */
-#ysr-contact .wrap{
-  max-width:1160px;margin:0 auto;position:relative;z-index:2;
-}
+            /* ─── BACKGROUND ─── */
+            #ysr-contact .c-grid {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+                background-image:
+                    linear-gradient(rgba(17, 17, 17, .045) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(17, 17, 17, .045) 1px, transparent 1px);
+                background-size: 52px 52px;
+            }
 
-/* ─── HEADER ─── */
-#ysr-contact .hdr{margin-bottom:72px}
-#ysr-contact .eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--acc);margin-bottom:20px;
-}
-#ysr-contact .eyebrow-line{width:32px;height:2px;background:var(--acc)}
-#ysr-contact .hdr-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(52px,7.5vw,96px);
-  font-weight:900;line-height:.88;
-  letter-spacing:-.03em;text-transform:uppercase;
-  color:var(--dark);margin-bottom:24px;
-}
-#ysr-contact .hdr-title em{
-  font-style:normal;
-  -webkit-text-stroke:2px var(--dark);
-  color:transparent;
-}
-#ysr-contact .hdr-title .acc-word{color:var(--acc)}
-#ysr-contact .hdr-sub{
-  font-size:16.5px;font-weight:400;color:var(--sub);
-  max-width:400px;line-height:1.7;
-}
+            #ysr-contact .c-blob {
+                position: absolute;
+                right: -120px;
+                top: -60px;
+                width: 560px;
+                height: 560px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(252, 164, 33, .10) 0%, transparent 70%);
+                z-index: 0;
+                pointer-events: none;
+            }
 
-/* ─── LAYOUT ─── */
-#ysr-contact .layout{
-  display:grid;
-  grid-template-columns:1fr 1.5fr;
-  gap:0;align-items:stretch;
-}
+            #ysr-contact .c-blob2 {
+                position: absolute;
+                left: -80px;
+                bottom: -100px;
+                width: 380px;
+                height: 380px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(252, 164, 33, .06) 0%, transparent 70%);
+                z-index: 0;
+                pointer-events: none;
+            }
 
-/* ─── LEFT PANEL ─── */
-#ysr-contact .left-panel{
-  background:var(--dark);padding:52px 44px;
-  position:relative;overflow:hidden;
-}
-#ysr-contact .left-panel::before{
-  content:'';position:absolute;
-  top:-80px;right:-80px;
-  width:280px;height:280px;border-radius:50%;
-  background:rgba(252,164,33,.07);
-  pointer-events:none;
-}
-#ysr-contact .left-panel::after{
-  content:'';position:absolute;
-  bottom:-40px;left:-40px;
-  width:180px;height:180px;border-radius:50%;
-  background:rgba(252,164,33,.05);
-  pointer-events:none;
-}
-#ysr-contact .lp-brand{
-  display:flex;align-items:center;gap:14px;
-  margin-bottom:48px;
-}
-#ysr-contact .lp-logo{
-  width:48px;height:48px;background:var(--acc);
-  display:flex;align-items:center;justify-content:center;
-  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
-}
-#ysr-contact .lp-logo i{font-size:20px;color:var(--dark)}
-#ysr-contact .lp-brand-text{}
-#ysr-contact .lp-brand-name{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:17px;font-weight:800;letter-spacing:.05em;
-  text-transform:uppercase;color:#fff;line-height:1.1;
-}
-#ysr-contact .lp-brand-tag{
-  font-size:10px;font-weight:500;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(255,255,255,.4);
-}
-#ysr-contact .lp-tagline{
-  font-size:13px;font-weight:400;color:rgba(255,255,255,.55);
-  line-height:1.7;margin-bottom:44px;max-width:260px;
-  border-left:2px solid var(--acc);padding-left:16px;
-}
+            /* Left accent spine */
+            #ysr-contact .c-spine {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 5px;
+                background: linear-gradient(180deg, var(--acc) 0%, var(--acc2) 100%);
+                z-index: 1;
+            }
 
-/* Contact items */
-#ysr-contact .ci-list{display:flex;flex-direction:column;gap:0}
-#ysr-contact .ci{
-  display:flex;align-items:flex-start;gap:18px;
-  padding:22px 0;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  transition:background .2s;
-}
-#ysr-contact .ci:last-of-type{border-bottom:none}
-#ysr-contact .ci-icon{
-  width:42px;height:42px;flex-shrink:0;
-  background:rgba(252,164,33,.12);
-  border:1px solid rgba(252,164,33,.2);
-  display:flex;align-items:center;justify-content:center;
-}
-#ysr-contact .ci-icon i{font-size:16px;color:var(--acc)}
-#ysr-contact .ci-label{
-  font-size:9.5px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px;
-}
-#ysr-contact .ci-val{
-  font-size:14px;font-weight:500;color:#fff;line-height:1.55;
-}
+            /* Top-right bracket deco */
+            #ysr-contact .c-bracket {
+                position: absolute;
+                top: 48px;
+                right: 48px;
+                width: 56px;
+                height: 56px;
+                border-top: 3px solid var(--acc);
+                border-right: 3px solid var(--acc);
+                opacity: .4;
+                z-index: 1;
+            }
 
-/* Hours */
-#ysr-contact .hours-box{
-  margin-top:40px;padding:22px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-}
-#ysr-contact .hours-lbl{
-  font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--acc);display:flex;align-items:center;gap:8px;margin-bottom:16px;
-}
-#ysr-contact .hr{
-  display:flex;justify-content:space-between;
-  padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);
-  font-size:12.5px;
-}
-#ysr-contact .hr:last-child{border-bottom:none}
-#ysr-contact .hr-day{color:rgba(255,255,255,.5);font-weight:400}
-#ysr-contact .hr-time{color:#fff;font-weight:500}
-#ysr-contact .hr-time.cl{color:#EF4444;font-size:10px;font-weight:700;letter-spacing:.07em}
+            #ysr-contact .c-bracket2 {
+                position: absolute;
+                bottom: 48px;
+                left: 64px;
+                width: 40px;
+                height: 40px;
+                border-bottom: 3px solid var(--acc);
+                border-left: 3px solid var(--acc);
+                opacity: .25;
+                z-index: 1;
+            }
 
-/* ─── RIGHT / FORM PANEL ─── */
-#ysr-contact .right-panel{
-  background:#fff;
-  border:1px solid var(--bdr);
-  border-left:none;
-  padding:52px 50px;
-  position:relative;
-}
-#ysr-contact .right-panel::before{
-  content:'';position:absolute;
-  top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--acc),var(--acc2));
-}
+            /* ─── WRAPPER ─── */
+            #ysr-contact .wrap {
+                max-width: 1160px;
+                margin: 0 auto;
+                position: relative;
+                z-index: 2;
+            }
 
-#ysr-contact .fp-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:20px;font-weight:800;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--dark);margin-bottom:4px;
-}
-#ysr-contact .fp-sub{
-  font-size:13px;color:var(--sub);margin-bottom:38px;
-}
+            /* ─── HEADER ─── */
+            #ysr-contact .hdr {
+                margin-bottom: 72px
+            }
 
-/* Fields */
-#ysr-contact .f-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
-#ysr-contact .f-full{grid-column:1/-1}
-#ysr-contact .f-grp{display:flex;flex-direction:column;gap:0;position:relative}
+            #ysr-contact .eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 10.5px;
+                font-weight: 700;
+                letter-spacing: .2em;
+                text-transform: uppercase;
+                color: var(--acc);
+                margin-bottom: 20px;
+            }
 
-#ysr-contact .f-label{
-  font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:6px;
-}
-#ysr-contact .f-label i{font-size:10px;color:var(--acc)}
+            #ysr-contact .eyebrow-line {
+                width: 32px;
+                height: 2px;
+                background: var(--acc)
+            }
 
-#ysr-contact .f-wrap{position:relative}
-#ysr-contact .f-ctrl{
-  font-family:'Barlow',sans-serif;
-  font-size:14.5px;font-weight:400;color:var(--txt);
-  background:#F9FAFB;
-  border:1.5px solid var(--bdr);
-  padding:13px 42px 13px 16px;
-  width:100%;outline:none;
-  transition:border-color .18s,background .18s,box-shadow .18s;
-  -webkit-appearance:none;resize:none;
-}
-#ysr-contact .f-ctrl::placeholder{color:#C5CAD3;font-size:14px}
-#ysr-contact .f-ctrl:focus{
-  border-color:var(--acc);background:#fff;
-  box-shadow:0 0 0 3px rgba(252,164,33,.13);
-}
-#ysr-contact .f-ctrl.is-err{border-color:var(--err);box-shadow:0 0 0 3px rgba(239,68,68,.09)}
-#ysr-contact .f-ctrl.is-ok{border-color:var(--ok)}
+            #ysr-contact .hdr-title {
+                font-family: 'Barlow Condensed', sans-serif;
+                font-size: clamp(52px, 7.5vw, 96px);
+                font-weight: 900;
+                line-height: .88;
+                letter-spacing: -.03em;
+                text-transform: uppercase;
+                color: var(--dark);
+                margin-bottom: 24px;
+            }
 
-/* status icon */
-#ysr-contact .f-ico{
-  position:absolute;right:14px;top:50%;transform:translateY(-50%);
-  font-size:12px;opacity:0;transition:opacity .18s;pointer-events:none;
-}
-#ysr-contact .f-ico.ok{color:var(--ok)}
-#ysr-contact .f-ico.err{color:var(--err)}
-#ysr-contact .f-ico.vis{opacity:1}
-#ysr-contact .ta-wrap .f-ico{top:14px;transform:none}
+            #ysr-contact .hdr-title em {
+                font-style: normal;
+                -webkit-text-stroke: 2px var(--dark);
+                color: transparent;
+            }
 
-#ysr-contact .f-err{
-  font-size:10.5px;font-weight:600;color:var(--err);
-  display:flex;align-items:center;gap:5px;
-  min-height:18px;margin-top:5px;
-  opacity:0;transform:translateY(-3px);
-  transition:opacity .18s,transform .18s;
-}
-#ysr-contact .f-err.vis{opacity:1;transform:translateY(0)}
+            #ysr-contact .hdr-title .acc-word {
+                color: var(--acc)
+            }
 
-#ysr-contact .char-row{display:flex;justify-content:space-between;align-items:center;margin-top:5px}
-#ysr-contact .char-ct{font-size:10.5px;color:var(--sub)}
+            #ysr-contact .hdr-sub {
+                font-size: 16.5px;
+                font-weight: 400;
+                color: var(--sub);
+                max-width: 400px;
+                line-height: 1.7;
+            }
 
-/* Divider with label */
-#ysr-contact .f-divider{
-  display:flex;align-items:center;gap:12px;
-  margin:28px 0 22px;
-}
-#ysr-contact .f-divider-line{flex:1;height:1px;background:var(--bdr)}
-#ysr-contact .f-divider-txt{
-  font-size:9px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--sub);white-space:nowrap;
-}
+            /* ─── LAYOUT ─── */
+            #ysr-contact .layout {
+                display: grid;
+                grid-template-columns: 1fr 1.5fr;
+                gap: 0;
+                align-items: stretch;
+            }
 
-/* SUBMIT BTN */
-#ysr-contact .btn-sub{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:15px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--dark);background:var(--acc);
-  border:none;width:100%;padding:17px 24px;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  cursor:pointer;position:relative;overflow:hidden;
-  clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));
-  transition:background .2s,transform .15s,box-shadow .2s;
-  margin-top:10px;
-}
-#ysr-contact .btn-sub:hover{background:#e8920a;transform:translateY(-2px);box-shadow:0 10px 36px rgba(252,164,33,.38)}
-#ysr-contact .btn-sub:active{transform:translateY(0)}
-#ysr-contact .btn-sub:disabled{opacity:.65;cursor:not-allowed;transform:none;box-shadow:none}
-#ysr-contact .btn-sub .spin{
-  display:none;width:16px;height:16px;border-radius:50%;
-  border:2.5px solid rgba(17,17,17,.25);border-top-color:var(--dark);
-  animation:ysrspin .65s linear infinite;
-}
-#ysr-contact .btn-sub.loading .spin{display:block}
-#ysr-contact .btn-sub.loading .btn-lbl{display:none}
-#ysr-contact .btn-sub.loading .btn-arr{display:none}
-@keyframes ysrspin{to{transform:rotate(360deg)}}
+            /* ─── LEFT PANEL ─── */
+            #ysr-contact .left-panel {
+                background: var(--dark);
+                padding: 52px 44px;
+                position: relative;
+                overflow: hidden;
+            }
 
-/* Micro privacy note */
-#ysr-contact .priv-note{
-  display:flex;align-items:center;gap:7px;justify-content:center;
-  font-size:11px;color:var(--sub);margin-top:14px;
-}
-#ysr-contact .priv-note i{font-size:10px;color:var(--acc)}
+            #ysr-contact .left-panel::before {
+                content: '';
+                position: absolute;
+                top: -80px;
+                right: -80px;
+                width: 280px;
+                height: 280px;
+                border-radius: 50%;
+                background: rgba(252, 164, 33, .07);
+                pointer-events: none;
+            }
 
-/* ─── TOAST ─── */
-#ysr-contact .toast-stack{
-  position:fixed;bottom:28px;right:28px;
-  display:flex;flex-direction:column;gap:10px;
-  z-index:99999;pointer-events:none;
-}
-#ysr-contact .toast{
-  pointer-events:auto;
-  display:flex;align-items:flex-start;gap:14px;
-  background:var(--dark);color:#fff;
-  padding:16px 20px;min-width:300px;max-width:360px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
-  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
-  transform:translateX(calc(100% + 40px));opacity:0;
-  transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;
-  position:relative;
-}
-#ysr-contact .toast.in{transform:translateX(0);opacity:1}
-#ysr-contact .t-icon{
-  width:34px;height:34px;border-radius:50%;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:14px;
-}
-#ysr-contact .toast.ok .t-icon{background:rgba(16,185,129,.18);color:#10B981}
-#ysr-contact .toast.er .t-icon{background:rgba(239,68,68,.18);color:#EF4444}
-#ysr-contact .t-head{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
-#ysr-contact .t-body{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.5}
-#ysr-contact .t-bar{
-  position:absolute;bottom:0;left:0;right:0;height:2.5px;
-  background:var(--acc);transform-origin:left;
-  animation:tprog 4.5s linear forwards;
-}
-@keyframes tprog{to{transform:scaleX(0)}}
+            #ysr-contact .left-panel::after {
+                content: '';
+                position: absolute;
+                bottom: -40px;
+                left: -40px;
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                background: rgba(252, 164, 33, .05);
+                pointer-events: none;
+            }
 
-/* ─── RESPONSIVE ─── */
-@media(max-width:960px){
-  #ysr-contact .layout{grid-template-columns:1fr}
-  #ysr-contact .right-panel{border-left:1px solid var(--bdr);border-top:none}
-  #ysr-contact .c-bracket,#ysr-contact .c-bracket2{display:none}
-}
-@media(max-width:620px){
-  #ysr-contact{padding:80px 16px 72px}
-  #ysr-contact .f-row{grid-template-columns:1fr}
-  #ysr-contact .left-panel,#ysr-contact .right-panel{padding:36px 24px}
-  #ysr-contact .toast-stack{bottom:16px;right:16px;left:16px}
-  #ysr-contact .toast{min-width:unset;max-width:100%}
-}
-</style>
+            #ysr-contact .lp-brand {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                margin-bottom: 48px;
+            }
 
-<!-- BG -->
-<div class="c-grid"></div>
-<div class="c-blob"></div>
-<div class="c-blob2"></div>
-<div class="c-spine"></div>
-<div class="c-bracket"></div>
-<div class="c-bracket2"></div>
+            #ysr-contact .lp-logo {
+                width: 48px;
+                height: 48px;
+                background: var(--acc);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            }
 
-<div class="wrap">
+            #ysr-contact .lp-logo i {
+                font-size: 20px;
+                color: var(--dark)
+            }
 
-  <!-- HEADER -->
-  <div class="hdr">
-    <div class="eyebrow">
-      <span class="eyebrow-line"></span>
-      YSR Build Junction — Est. 2010
-    </div>
-    <h2 class="hdr-title">
-      Let's <em>Build</em><br>
-      <span class="acc-word">Together.</span>
-    </h2>
-    <p class="hdr-sub">Product inquiries, bulk quotes, or project support — our team is ready to help you build better.</p>
-  </div>
+            #ysr-contact .lp-brand-text {}
 
-  <!-- LAYOUT -->
-  <div class="layout">
+            #ysr-contact .lp-brand-name {
+                font-family: 'Barlow Condensed', sans-serif;
+                font-size: 17px;
+                font-weight: 800;
+                letter-spacing: .05em;
+                text-transform: uppercase;
+                color: #fff;
+                line-height: 1.1;
+            }
 
-    <!-- LEFT DARK PANEL -->
-    <div class="left-panel">
-      <div class="lp-brand">
-        <div class="lp-logo"><i class="fa-solid fa-building-columns"></i></div>
-        <div class="lp-brand-text">
-          <div class="lp-brand-name">YSR Build<br>Junction</div>
-          <div class="lp-brand-tag">Construction Materials</div>
-        </div>
-      </div>
+            #ysr-contact .lp-brand-tag {
+                font-size: 10px;
+                font-weight: 500;
+                letter-spacing: .12em;
+                text-transform: uppercase;
+                color: rgba(255, 255, 255, .4);
+            }
 
-      <p class="lp-tagline">
-        Premium-grade building materials sourced for durability, delivered with precision. Your project deserves nothing less.
-      </p>
+            #ysr-contact .lp-tagline {
+                font-size: 13px;
+                font-weight: 400;
+                color: rgba(255, 255, 255, .55);
+                line-height: 1.7;
+                margin-bottom: 44px;
+                max-width: 260px;
+                border-left: 2px solid var(--acc);
+                padding-left: 16px;
+            }
 
-      <div class="ci-list">
-        <div class="ci">
-          <div class="ci-icon"><i class="fa-solid fa-location-dot"></i></div>
-          <div>
-            <div class="ci-label">Headquarters</div>
-            <div class="ci-val">Plot 12, Industrial Estate<br>Bhavnagar, Gujarat — 364001</div>
-          </div>
-        </div>
-        <div class="ci">
-          <div class="ci-icon"><i class="fa-solid fa-phone"></i></div>
-          <div>
-            <div class="ci-label">Call Directly</div>
-            <div class="ci-val">+91 98765 43210<br>+91 91234 56789</div>
-          </div>
-        </div>
-        <div class="ci">
-          <div class="ci-icon"><i class="fa-solid fa-envelope"></i></div>
-          <div>
-            <div class="ci-label">Email Us</div>
-            <div class="ci-val">info@ysrbuildjunction.com<br>sales@ysrbuildjunction.com</div>
-          </div>
-        </div>
-        <div class="ci">
-          <div class="ci-icon"><i class="fa-brands fa-whatsapp"></i></div>
-          <div>
-            <div class="ci-label">WhatsApp</div>
-            <div class="ci-val">+91 98765 43210</div>
-          </div>
-        </div>
-      </div>
+            /* Contact items */
+            #ysr-contact .ci-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0
+            }
 
-      <div class="hours-box">
-        <div class="hours-lbl"><i class="fa-regular fa-clock"></i> Working Hours</div>
-        <div class="hr"><span class="hr-day">Mon – Fri</span><span class="hr-time">9:00 AM – 6:00 PM</span></div>
-        <div class="hr"><span class="hr-day">Saturday</span><span class="hr-time">9:00 AM – 2:00 PM</span></div>
-        <div class="hr"><span class="hr-day">Sunday</span><span class="hr-time cl">CLOSED</span></div>
-      </div>
-    </div>
+            #ysr-contact .ci {
+                display: flex;
+                align-items: flex-start;
+                gap: 18px;
+                padding: 22px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, .08);
+                transition: background .2s;
+            }
 
-    <!-- RIGHT FORM PANEL -->
-    <div class="right-panel">
-      <div class="fp-title">Send a Message</div>
-      <div class="fp-sub">We respond to all inquiries within 24 business hours.</div>
+            #ysr-contact .ci:last-of-type {
+                border-bottom: none
+            }
 
-      <form id="ysrForm" novalidate>
+            #ysr-contact .ci-icon {
+                width: 42px;
+                height: 42px;
+                flex-shrink: 0;
+                background: rgba(252, 164, 33, .12);
+                border: 1px solid rgba(252, 164, 33, .2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        <div class="f-row">
-          <!-- Name -->
-          <div class="f-grp">
-            <label class="f-label" for="ysrName"><i class="fa-solid fa-user"></i> Full Name</label>
-            <div class="f-wrap">
-              <input class="f-ctrl" id="ysrName" name="name" type="text" placeholder="Rajesh Kumar" autocomplete="name"/>
-              <span class="f-ico ok"><i class="fa-solid fa-check"></i></span>
-              <span class="f-ico err" style="display:none"><i class="fa-solid fa-xmark"></i></span>
+            #ysr-contact .ci-icon i {
+                font-size: 16px;
+                color: var(--acc)
+            }
+
+            #ysr-contact .ci-label {
+                font-size: 9.5px;
+                font-weight: 700;
+                letter-spacing: .18em;
+                text-transform: uppercase;
+                color: rgba(255, 255, 255, .35);
+                margin-bottom: 5px;
+            }
+
+            #ysr-contact .ci-val {
+                font-size: 14px;
+                font-weight: 500;
+                color: #fff;
+                line-height: 1.55;
+            }
+
+            /* Hours */
+            #ysr-contact .hours-box {
+                margin-top: 40px;
+                padding: 22px;
+                background: rgba(255, 255, 255, .04);
+                border: 1px solid rgba(255, 255, 255, .08);
+            }
+
+            #ysr-contact .hours-lbl {
+                font-size: 9.5px;
+                font-weight: 700;
+                letter-spacing: .18em;
+                text-transform: uppercase;
+                color: var(--acc);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            #ysr-contact .hr {
+                display: flex;
+                justify-content: space-between;
+                padding: 7px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, .05);
+                font-size: 12.5px;
+            }
+
+            #ysr-contact .hr:last-child {
+                border-bottom: none
+            }
+
+            #ysr-contact .hr-day {
+                color: rgba(255, 255, 255, .5);
+                font-weight: 400
+            }
+
+            #ysr-contact .hr-time {
+                color: #fff;
+                font-weight: 500
+            }
+
+            #ysr-contact .hr-time.cl {
+                color: #EF4444;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: .07em
+            }
+
+            /* ─── RIGHT / FORM PANEL ─── */
+            #ysr-contact .right-panel {
+                background: #fff;
+                border: 1px solid var(--bdr);
+                border-left: none;
+                padding: 52px 50px;
+                position: relative;
+            }
+
+            #ysr-contact .right-panel::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, var(--acc), var(--acc2));
+            }
+
+            #ysr-contact .fp-title {
+                font-family: 'Barlow Condensed', sans-serif;
+                font-size: 20px;
+                font-weight: 800;
+                letter-spacing: .06em;
+                text-transform: uppercase;
+                color: var(--dark);
+                margin-bottom: 4px;
+            }
+
+            #ysr-contact .fp-sub {
+                font-size: 13px;
+                color: var(--sub);
+                margin-bottom: 38px;
+            }
+
+            /* Fields */
+            #ysr-contact .f-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 18px;
+                margin-bottom: 18px
+            }
+
+            #ysr-contact .f-full {
+                grid-column: 1/-1
+            }
+
+            #ysr-contact .f-grp {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                position: relative
+            }
+
+            #ysr-contact .f-label {
+                font-size: 9.5px;
+                font-weight: 700;
+                letter-spacing: .16em;
+                text-transform: uppercase;
+                color: var(--dark);
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            #ysr-contact .f-label i {
+                font-size: 10px;
+                color: var(--acc)
+            }
+
+            #ysr-contact .f-wrap {
+                position: relative
+            }
+
+            #ysr-contact .f-ctrl {
+                font-family: 'Barlow', sans-serif;
+                font-size: 14.5px;
+                font-weight: 400;
+                color: var(--txt);
+                background: #F9FAFB;
+                border: 1.5px solid var(--bdr);
+                padding: 13px 42px 13px 16px;
+                width: 100%;
+                outline: none;
+                transition: border-color .18s, background .18s, box-shadow .18s;
+                -webkit-appearance: none;
+                resize: none;
+            }
+
+            #ysr-contact .f-ctrl::placeholder {
+                color: #C5CAD3;
+                font-size: 14px
+            }
+
+            #ysr-contact .f-ctrl:focus {
+                border-color: var(--acc);
+                background: #fff;
+                box-shadow: 0 0 0 3px rgba(252, 164, 33, .13);
+            }
+
+            #ysr-contact .f-ctrl.is-err {
+                border-color: var(--err);
+                box-shadow: 0 0 0 3px rgba(239, 68, 68, .09)
+            }
+
+            #ysr-contact .f-ctrl.is-ok {
+                border-color: var(--ok)
+            }
+
+            /* status icon */
+            #ysr-contact .f-ico {
+                position: absolute;
+                right: 14px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 12px;
+                opacity: 0;
+                transition: opacity .18s;
+                pointer-events: none;
+            }
+
+            #ysr-contact .f-ico.ok {
+                color: var(--ok)
+            }
+
+            #ysr-contact .f-ico.err {
+                color: var(--err)
+            }
+
+            #ysr-contact .f-ico.vis {
+                opacity: 1
+            }
+
+            #ysr-contact .ta-wrap .f-ico {
+                top: 14px;
+                transform: none
+            }
+
+            #ysr-contact .f-err {
+                font-size: 10.5px;
+                font-weight: 600;
+                color: var(--err);
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                min-height: 18px;
+                margin-top: 5px;
+                opacity: 0;
+                transform: translateY(-3px);
+                transition: opacity .18s, transform .18s;
+            }
+
+            #ysr-contact .f-err.vis {
+                opacity: 1;
+                transform: translateY(0)
+            }
+
+            #ysr-contact .char-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 5px
+            }
+
+            #ysr-contact .char-ct {
+                font-size: 10.5px;
+                color: var(--sub)
+            }
+
+            /* Divider with label */
+            #ysr-contact .f-divider {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin: 28px 0 22px;
+            }
+
+            #ysr-contact .f-divider-line {
+                flex: 1;
+                height: 1px;
+                background: var(--bdr)
+            }
+
+            #ysr-contact .f-divider-txt {
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: .18em;
+                text-transform: uppercase;
+                color: var(--sub);
+                white-space: nowrap;
+            }
+
+            /* SUBMIT BTN */
+            #ysr-contact .btn-sub {
+                font-family: 'Barlow Condensed', sans-serif;
+                font-size: 15px;
+                font-weight: 800;
+                letter-spacing: .14em;
+                text-transform: uppercase;
+                color: var(--dark);
+                background: var(--acc);
+                border: none;
+                width: 100%;
+                padding: 17px 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+                transition: background .2s, transform .15s, box-shadow .2s;
+                margin-top: 10px;
+            }
+
+            #ysr-contact .btn-sub:hover {
+                background: #e8920a;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 36px rgba(252, 164, 33, .38)
+            }
+
+            #ysr-contact .btn-sub:active {
+                transform: translateY(0)
+            }
+
+            #ysr-contact .btn-sub:disabled {
+                opacity: .65;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none
+            }
+
+            #ysr-contact .btn-sub .spin {
+                display: none;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                border: 2.5px solid rgba(17, 17, 17, .25);
+                border-top-color: var(--dark);
+                animation: ysrspin .65s linear infinite;
+            }
+
+            #ysr-contact .btn-sub.loading .spin {
+                display: block
+            }
+
+            #ysr-contact .btn-sub.loading .btn-lbl {
+                display: none
+            }
+
+            #ysr-contact .btn-sub.loading .btn-arr {
+                display: none
+            }
+
+            @keyframes ysrspin {
+                to {
+                    transform: rotate(360deg)
+                }
+            }
+
+            /* Micro privacy note */
+            #ysr-contact .priv-note {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                justify-content: center;
+                font-size: 11px;
+                color: var(--sub);
+                margin-top: 14px;
+            }
+
+            #ysr-contact .priv-note i {
+                font-size: 10px;
+                color: var(--acc)
+            }
+
+            /* ─── TOAST ─── */
+            #ysr-contact .toast-stack {
+                position: fixed;
+                bottom: 28px;
+                right: 28px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                z-index: 99999;
+                pointer-events: none;
+            }
+
+            #ysr-contact .toast {
+                pointer-events: auto;
+                display: flex;
+                align-items: flex-start;
+                gap: 14px;
+                background: var(--dark);
+                color: #fff;
+                padding: 16px 20px;
+                min-width: 300px;
+                max-width: 360px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+                clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+                transform: translateX(calc(100% + 40px));
+                opacity: 0;
+                transition: transform .4s cubic-bezier(.22, 1, .36, 1), opacity .3s;
+                position: relative;
+            }
+
+            #ysr-contact .toast.in {
+                transform: translateX(0);
+                opacity: 1
+            }
+
+            #ysr-contact .t-icon {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+            }
+
+            #ysr-contact .toast.ok .t-icon {
+                background: rgba(16, 185, 129, .18);
+                color: #10B981
+            }
+
+            #ysr-contact .toast.er .t-icon {
+                background: rgba(239, 68, 68, .18);
+                color: #EF4444
+            }
+
+            #ysr-contact .t-head {
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: .06em;
+                text-transform: uppercase;
+                margin-bottom: 3px
+            }
+
+            #ysr-contact .t-body {
+                font-size: 12.5px;
+                color: rgba(255, 255, 255, .6);
+                line-height: 1.5
+            }
+
+            #ysr-contact .t-bar {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2.5px;
+                background: var(--acc);
+                transform-origin: left;
+                animation: tprog 4.5s linear forwards;
+            }
+
+            @keyframes tprog {
+                to {
+                    transform: scaleX(0)
+                }
+            }
+
+            /* ─── RESPONSIVE ─── */
+            @media(max-width:960px) {
+                #ysr-contact .layout {
+                    grid-template-columns: 1fr
+                }
+
+                #ysr-contact .right-panel {
+                    border-left: 1px solid var(--bdr);
+                    border-top: none
+                }
+
+                #ysr-contact .c-bracket,
+                #ysr-contact .c-bracket2 {
+                    display: none
+                }
+            }
+
+            @media(max-width:620px) {
+                #ysr-contact {
+                    padding: 80px 16px 72px
+                }
+
+                #ysr-contact .f-row {
+                    grid-template-columns: 1fr
+                }
+
+                #ysr-contact .left-panel,
+                #nysr-contact .right-panel {
+                    padding: 36px 24px
+                }
+
+                #ysr-contact .toast-stack {
+                    bottom: 16px;
+                    right: 16px;
+                    left: 16px
+                }
+
+                #ysr-contact .toast {
+                    min-width: unset;
+                    max-width: 100%
+                }
+            }
+        </style>
+
+        <!-- BG -->
+        <div class="c-grid"></div>
+        <div class="c-blob"></div>
+        <div class="c-blob2"></div>
+        <div class="c-spine"></div>
+        <div class="c-bracket"></div>
+        <div class="c-bracket2"></div>
+
+        <div class="wrap">
+
+            <!-- HEADER -->
+            <div class="hdr">
+                <div class="eyebrow">
+                    <span class="eyebrow-line"></span>
+                    YSR Build Junction — Est. 2010
+                </div>
+                <h2 class="hdr-title">
+                    Let's <em>Build</em><br>
+                    <span class="acc-word">Together.</span>
+                </h2>
+                <p class="hdr-sub">Product inquiries, bulk quotes, or project support — our team is ready to help you
+                    build better.</p>
             </div>
-            <div class="f-err" id="ysrName-e"><i class="fa-solid fa-triangle-exclamation"></i><span></span></div>
-          </div>
-          <!-- Email -->
-          <div class="f-grp">
-            <label class="f-label" for="ysrEmail"><i class="fa-solid fa-envelope"></i> Email Address</label>
-            <div class="f-wrap">
-              <input class="f-ctrl" id="ysrEmail" name="email" type="email" placeholder="you@company.com" autocomplete="email"/>
-              <span class="f-ico ok"><i class="fa-solid fa-check"></i></span>
-              <span class="f-ico err" style="display:none"><i class="fa-solid fa-xmark"></i></span>
+
+            <!-- LAYOUT -->
+            <div class="layout">
+
+                <!-- LEFT DARK PANEL -->
+                <div class="left-panel">
+                    <div class="lp-brand">
+                        <div class="lp-logo"><i class="fa-solid fa-building-columns"></i></div>
+                        <div class="lp-brand-text">
+                            <div class="lp-brand-name">YSR Build<br>Junction</div>
+                            <div class="lp-brand-tag">Construction Materials</div>
+                        </div>
+                    </div>
+
+                    <p class="lp-tagline">
+                        Premium-grade building materials sourced for durability, delivered with precision. Your project
+                        deserves nothing less.
+                    </p>
+
+                    <div class="ci-list">
+                        <div class="ci">
+                            <div class="ci-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <div class="ci-label">Headquarters</div>
+                                <div class="ci-val">YSR Buildjunction, Bhavnagar, Gujarat, India - 364002</div>
+                            </div>
+                        </div>
+                        <div class="ci">
+                            <div class="ci-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <div class="ci-label">Call Directly</div>
+                                <div class="ci-val">+91 98765 43210</div>
+                            </div>
+                        </div>
+                        <div class="ci">
+                            <div class="ci-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <div class="ci-label">Email Us</div>
+                                <div class="ci-val">info@ysrbuildjunction.com<br></div>
+                            </div>
+                        </div>
+                        <div class="ci">
+                            <div class="ci-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                            <div>
+                                <div class="ci-label">WhatsApp</div>
+                                <div class="ci-val">+91 98765 43210</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hours-box">
+                        <div class="hours-lbl"><i class="fa-regular fa-clock"></i> Working Hours</div>
+                        <div class="hr"><span class="hr-day">Mon – Fri</span><span class="hr-time">9:00 AM – 6:00
+                                PM</span></div>
+                        <div class="hr"><span class="hr-day">Saturday</span><span class="hr-time">9:00 AM – 2:00
+                                PM</span></div>
+                        <div class="hr"><span class="hr-day">Sunday</span><span class="hr-time cl">CLOSED</span></div>
+                    </div>
+                </div>
+
+                <!-- RIGHT FORM PANEL -->
+                <div class="right-panel">
+                    <div class="fp-title">Send a Message</div>
+                    <div class="fp-sub">We respond to all inquiries within 24 business hours.</div>
+
+                    <form id="ysrForm" novalidate>
+
+                        <div class="f-row">
+                            <!-- Name -->
+                            <div class="f-grp">
+                                <label class="f-label" for="ysrName"><i class="fa-solid fa-user"></i> Full Name</label>
+                                <div class="f-wrap">
+                                    <input class="f-ctrl" id="ysrName" name="name" type="text"
+                                        placeholder="Rajesh Kumar" autocomplete="name" />
+                                    <span class="f-ico ok"><i class="fa-solid fa-check"></i></span>
+                                    <span class="f-ico err" style="display:none"><i
+                                            class="fa-solid fa-xmark"></i></span>
+                                </div>
+                                <div class="f-err" id="ysrName-e"><i
+                                        class="fa-solid fa-triangle-exclamation"></i><span></span></div>
+                            </div>
+                            <!-- Email -->
+                            <div class="f-grp">
+                                <label class="f-label" for="ysrEmail"><i class="fa-solid fa-envelope"></i> Email
+                                    Address</label>
+                                <div class="f-wrap">
+                                    <input class="f-ctrl" id="ysrEmail" name="email" type="email"
+                                        placeholder="you@company.com" autocomplete="email" />
+                                    <span class="f-ico ok"><i class="fa-solid fa-check"></i></span>
+                                    <span class="f-ico err" style="display:none"><i
+                                            class="fa-solid fa-xmark"></i></span>
+                                </div>
+                                <div class="f-err" id="ysrEmail-e"><i
+                                        class="fa-solid fa-triangle-exclamation"></i><span></span></div>
+                            </div>
+                        </div>
+
+                        <!-- Phone (full width) -->
+                        <div class="f-row" style="margin-bottom:18px">
+                            <div class="f-grp f-full">
+                                <label class="f-label" for="ysrPhone"><i class="fa-solid fa-mobile-screen-button"></i>
+                                    Phone Number</label>
+                                <div class="f-wrap">
+                                    <input class="f-ctrl" id="ysrPhone" name="phone" type="tel"
+                                        placeholder="+91 98765 43210" autocomplete="tel" />
+                                    <span class="f-ico ok"><i class="fa-solid fa-check"></i></span>
+                                    <span class="f-ico err" style="display:none"><i
+                                            class="fa-solid fa-xmark"></i></span>
+                                </div>
+                                <div class="f-err" id="ysrPhone-e"><i
+                                        class="fa-solid fa-triangle-exclamation"></i><span></span></div>
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="f-row">
+                            <div class="f-grp f-full">
+                                <label class="f-label" for="ysrMsg"><i class="fa-solid fa-comment-dots"></i> Your
+                                    Message</label>
+                                <div class="f-wrap ta-wrap">
+                                    <textarea class="f-ctrl" id="ysrMsg" name="message" rows="5"
+                                        placeholder="Describe your project, required materials, quantity, or any specific questions…"></textarea>
+                                    <span class="f-ico ok"><i class="fa-solid fa-check"></i></span>
+                                    <span class="f-ico err" style="display:none"><i
+                                            class="fa-solid fa-xmark"></i></span>
+                                </div>
+                                <div class="char-row">
+                                    <div class="f-err" id="ysrMsg-e" style="margin-top:0"><i
+                                            class="fa-solid fa-triangle-exclamation"></i><span></span></div>
+                                    <span class="char-ct" id="charCt">0 / 500</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="f-divider">
+                            <div class="f-divider-line"></div>
+                            <div class="f-divider-txt"><i class="fa-solid fa-shield-halved"
+                                    style="font-size:9px;margin-right:4px;color:var(--acc)"></i>Secure Submission</div>
+                            <div class="f-divider-line"></div>
+                        </div>
+
+                        <button class="btn-sub" id="ysrBtn" type="submit">
+                            <div class="spin"></div>
+                            <span class="btn-lbl">Send Your Message</span>
+                            <i class="fa-solid fa-paper-plane btn-arr"></i>
+                        </button>
+
+                        <p class="priv-note">
+                            <i class="fa-solid fa-lock"></i>
+                            Your data is encrypted and never shared with third parties.
+                        </p>
+
+                    </form>
+                </div>
             </div>
-            <div class="f-err" id="ysrEmail-e"><i class="fa-solid fa-triangle-exclamation"></i><span></span></div>
-          </div>
         </div>
 
-        <!-- Phone (full width) -->
-        <div class="f-row" style="margin-bottom:18px">
-          <div class="f-grp f-full">
-            <label class="f-label" for="ysrPhone"><i class="fa-solid fa-mobile-screen-button"></i> Phone Number</label>
-            <div class="f-wrap">
-              <input class="f-ctrl" id="ysrPhone" name="phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel"/>
-              <span class="f-ico ok"><i class="fa-solid fa-check"></i></span>
-              <span class="f-ico err" style="display:none"><i class="fa-solid fa-xmark"></i></span>
-            </div>
-            <div class="f-err" id="ysrPhone-e"><i class="fa-solid fa-triangle-exclamation"></i><span></span></div>
-          </div>
-        </div>
+        <!-- TOAST -->
+        <div class="toast-stack" id="ysrToasts"></div>
 
-        <!-- Message -->
-        <div class="f-row">
-          <div class="f-grp f-full">
-            <label class="f-label" for="ysrMsg"><i class="fa-solid fa-comment-dots"></i> Your Message</label>
-            <div class="f-wrap ta-wrap">
-              <textarea class="f-ctrl" id="ysrMsg" name="message" rows="5"
-                placeholder="Describe your project, required materials, quantity, or any specific questions…"></textarea>
-              <span class="f-ico ok"><i class="fa-solid fa-check"></i></span>
-              <span class="f-ico err" style="display:none"><i class="fa-solid fa-xmark"></i></span>
-            </div>
-            <div class="char-row">
-              <div class="f-err" id="ysrMsg-e" style="margin-top:0"><i class="fa-solid fa-triangle-exclamation"></i><span></span></div>
-              <span class="char-ct" id="charCt">0 / 500</span>
-            </div>
-          </div>
-        </div>
+        <script>
+            (function () {
+                const $ = id => document.getElementById(id);
+                const form = $('ysrForm');
+                const btn = $('ysrBtn');
 
-        <div class="f-divider">
-          <div class="f-divider-line"></div>
-          <div class="f-divider-txt"><i class="fa-solid fa-shield-halved" style="font-size:9px;margin-right:4px;color:var(--acc)"></i>Secure Submission</div>
-          <div class="f-divider-line"></div>
-        </div>
+                const V = {
+                    ysrName: {
+                        el: 'ysrName', err: 'ysrName-e',
+                        fn(v) { if (!v) return 'Name is required'; if (v.length < 2) return 'At least 2 characters'; if (!/^[a-zA-Z\s'-.]+$/.test(v)) return 'Enter a valid name'; return null }
+                    },
+                    ysrEmail: {
+                        el: 'ysrEmail', err: 'ysrEmail-e',
+                        fn(v) { if (!v) return 'Email is required'; if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'Enter a valid email'; return null }
+                    },
+                    ysrPhone: {
+                        el: 'ysrPhone', err: 'ysrPhone-e',
+                        fn(v) { if (!v) return 'Phone number is required'; const d = v.replace(/\D/g, ''); if (d.length < 7 || d.length > 15) return 'Enter a valid phone number'; return null }
+                    },
+                    ysrMsg: {
+                        el: 'ysrMsg', err: 'ysrMsg-e',
+                        fn(v) { if (!v) return 'Please enter your message'; if (v.length < 10) return 'At least 10 characters'; if (v.length > 500) return 'Max 500 characters'; return null }
+                    }
+                };
 
-        <button class="btn-sub" id="ysrBtn" type="submit">
-          <div class="spin"></div>
-          <span class="btn-lbl">Send Your Message</span>
-          <i class="fa-solid fa-paper-plane btn-arr"></i>
-        </button>
+                function setState(key, state, msg) {
+                    const cfg = V[key];
+                    const el = $(cfg.el);
+                    const errEl = $(cfg.err);
+                    const wrap = el.closest('.f-wrap');
+                    const okI = wrap.querySelector('.f-ico.ok');
+                    const erI = wrap.querySelector('.f-ico.err');
+                    el.classList.remove('is-err', 'is-ok');
+                    okI.classList.remove('vis'); okI.style.display = '';
+                    erI.classList.remove('vis'); erI.style.display = '';
+                    errEl.classList.remove('vis');
+                    if (state === 'err') {
+                        el.classList.add('is-err');
+                        erI.style.display = ''; erI.classList.add('vis');
+                        errEl.querySelector('span').textContent = msg;
+                        errEl.classList.add('vis');
+                    } else if (state === 'ok') {
+                        el.classList.add('is-ok');
+                        okI.classList.add('vis');
+                    }
+                }
 
-        <p class="priv-note">
-          <i class="fa-solid fa-lock"></i>
-          Your data is encrypted and never shared with third parties.
-        </p>
+                function clearState(key) {
+                    const cfg = V[key];
+                    const el = $(cfg.el);
+                    const errEl = $(cfg.err);
+                    el.classList.remove('is-err', 'is-ok');
+                    el.closest('.f-wrap').querySelectorAll('.f-ico').forEach(i => i.classList.remove('vis'));
+                    errEl.classList.remove('vis');
+                }
 
-      </form>
-    </div>
-  </div>
-</div>
+                Object.keys(V).forEach(key => {
+                    const el = $(V[key].el);
+                    el.addEventListener('blur', () => {
+                        const e = V[key].fn(el.value.trim());
+                        e ? setState(key, 'err', e) : setState(key, 'ok');
+                    });
+                    el.addEventListener('input', () => {
+                        if (el.classList.contains('is-err')) {
+                            const e = V[key].fn(el.value.trim());
+                            e ? setState(key, 'err', e) : setState(key, 'ok');
+                        }
+                    });
+                });
 
-<!-- TOAST -->
-<div class="toast-stack" id="ysrToasts"></div>
+                // Char count
+                const msgEl = $('ysrMsg');
+                const cc = $('charCt');
+                msgEl.addEventListener('input', () => {
+                    const l = msgEl.value.length;
+                    cc.textContent = l + ' / 500';
+                    cc.style.color = l > 450 ? '#EF4444' : '#6B7280';
+                });
 
-<script>
-(function(){
-  const $ = id => document.getElementById(id);
-  const form = $('ysrForm');
-  const btn = $('ysrBtn');
+                function toast(type, title, body) {
+                    const wrap = $('ysrToasts');
+                    const t = document.createElement('div');
+                    t.className = 'toast ' + (type === 'ok' ? 'ok' : 'er');
+                    t.innerHTML = `<div class="t-icon"><i class="fa-solid ${type === 'ok' ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i></div><div><div class="t-head">${title}</div><div class="t-body">${body}</div></div><div class="t-bar"></div>`;
+                    wrap.appendChild(t);
+                    requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('in')));
+                    setTimeout(() => { t.classList.remove('in'); setTimeout(() => t.remove(), 450); }, 4600);
+                }
 
-  const V = {
-    ysrName:{
-      el:'ysrName', err:'ysrName-e',
-      fn(v){ if(!v) return 'Name is required'; if(v.length<2) return 'At least 2 characters'; if(!/^[a-zA-Z\s'-.]+$/.test(v)) return 'Enter a valid name'; return null }
-    },
-    ysrEmail:{
-      el:'ysrEmail', err:'ysrEmail-e',
-      fn(v){ if(!v) return 'Email is required'; if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'Enter a valid email'; return null }
-    },
-    ysrPhone:{
-      el:'ysrPhone', err:'ysrPhone-e',
-      fn(v){ if(!v) return 'Phone number is required'; const d=v.replace(/\D/g,''); if(d.length<7||d.length>15) return 'Enter a valid phone number'; return null }
-    },
-    ysrMsg:{
-      el:'ysrMsg', err:'ysrMsg-e',
-      fn(v){ if(!v) return 'Please enter your message'; if(v.length<10) return 'At least 10 characters'; if(v.length>500) return 'Max 500 characters'; return null }
-    }
-  };
+                form.addEventListener('submit', async e => {
+                    e.preventDefault();
+                    let bad = false;
+                    Object.keys(V).forEach(key => {
+                        const el = $(V[key].el);
+                        const er = V[key].fn(el.value.trim());
+                        if (er) { setState(key, 'err', er); bad = true; }
+                        else setState(key, 'ok');
+                    });
+                    if (bad) { toast('er', 'Incomplete Form', 'Please fix the highlighted fields before submitting.'); return; }
 
-  function setState(key, state, msg){
-    const cfg = V[key];
-    const el = $(cfg.el);
-    const errEl = $(cfg.err);
-    const wrap = el.closest('.f-wrap');
-    const okI = wrap.querySelector('.f-ico.ok');
-    const erI = wrap.querySelector('.f-ico.err');
-    el.classList.remove('is-err','is-ok');
-    okI.classList.remove('vis'); okI.style.display='';
-    erI.classList.remove('vis'); erI.style.display='';
-    errEl.classList.remove('vis');
-    if(state==='err'){
-      el.classList.add('is-err');
-      erI.style.display=''; erI.classList.add('vis');
-      errEl.querySelector('span').textContent=msg;
-      errEl.classList.add('vis');
-    } else if(state==='ok'){
-      el.classList.add('is-ok');
-      okI.classList.add('vis');
-    }
-  }
+                    btn.disabled = true; btn.classList.add('loading');
+                    const data = {
+                        name: $('ysrName').value.trim(),
+                        email: $('ysrEmail').value.trim(),
+                        phone: $('ysrPhone').value.trim(),
+                        message: $('ysrMsg').value.trim()
+                    };
+                    try {
+                        const res = await fetch('https://formspree.io/f/your-form-id', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                        if (res.ok) {
+                            toast('ok', 'Message Sent!', 'We\'ll respond to your inquiry within 24 hours.');
+                            form.reset();
+                            cc.textContent = '0 / 500';
+                            Object.keys(V).forEach(k => clearState(k));
+                        } else {
+                            const j = await res.json().catch(() => ({}));
+                            const em = j?.errors?.map(e => e.message).join(', ') || 'Submission failed. Please try again.';
+                            toast('er', 'Submission Failed', em);
+                        }
+                    } catch (err) {
+                        toast('er', 'Network Error', 'Check your connection and try again.');
+                    } finally {
+                        btn.disabled = false; btn.classList.remove('loading');
+                    }
+                });
+            })();
+        </script>
 
-  function clearState(key){
-    const cfg = V[key];
-    const el = $(cfg.el);
-    const errEl = $(cfg.err);
-    el.classList.remove('is-err','is-ok');
-    el.closest('.f-wrap').querySelectorAll('.f-ico').forEach(i=>i.classList.remove('vis'));
-    errEl.classList.remove('vis');
-  }
-
-  Object.keys(V).forEach(key=>{
-    const el = $(V[key].el);
-    el.addEventListener('blur',()=>{
-      const e = V[key].fn(el.value.trim());
-      e ? setState(key,'err',e) : setState(key,'ok');
-    });
-    el.addEventListener('input',()=>{
-      if(el.classList.contains('is-err')){
-        const e = V[key].fn(el.value.trim());
-        e ? setState(key,'err',e) : setState(key,'ok');
-      }
-    });
-  });
-
-  // Char count
-  const msgEl = $('ysrMsg');
-  const cc = $('charCt');
-  msgEl.addEventListener('input',()=>{
-    const l = msgEl.value.length;
-    cc.textContent = l+' / 500';
-    cc.style.color = l>450 ? '#EF4444' : '#6B7280';
-  });
-
-  function toast(type, title, body){
-    const wrap = $('ysrToasts');
-    const t = document.createElement('div');
-    t.className = 'toast '+(type==='ok'?'ok':'er');
-    t.innerHTML = `<div class="t-icon"><i class="fa-solid ${type==='ok'?'fa-circle-check':'fa-circle-exclamation'}"></i></div><div><div class="t-head">${title}</div><div class="t-body">${body}</div></div><div class="t-bar"></div>`;
-    wrap.appendChild(t);
-    requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('in')));
-    setTimeout(()=>{ t.classList.remove('in'); setTimeout(()=>t.remove(),450); }, 4600);
-  }
-
-  form.addEventListener('submit', async e=>{
-    e.preventDefault();
-    let bad = false;
-    Object.keys(V).forEach(key=>{
-      const el = $(V[key].el);
-      const er = V[key].fn(el.value.trim());
-      if(er){ setState(key,'err',er); bad=true; }
-      else setState(key,'ok');
-    });
-    if(bad){ toast('er','Incomplete Form','Please fix the highlighted fields before submitting.'); return; }
-
-    btn.disabled=true; btn.classList.add('loading');
-    const data = {
-      name: $('ysrName').value.trim(),
-      email: $('ysrEmail').value.trim(),
-      phone: $('ysrPhone').value.trim(),
-      message: $('ysrMsg').value.trim()
-    };
-    try{
-      const res = await fetch('https://formspree.io/f/your-form-id',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body:JSON.stringify(data)
-      });
-      if(res.ok){
-        toast('ok','Message Sent!','We\'ll respond to your inquiry within 24 hours.');
-        form.reset();
-        cc.textContent='0 / 500';
-        Object.keys(V).forEach(k=>clearState(k));
-      } else {
-        const j = await res.json().catch(()=>({}));
-        const em = j?.errors?.map(e=>e.message).join(', ')||'Submission failed. Please try again.';
-        toast('er','Submission Failed', em);
-      }
-    } catch(err){
-      toast('er','Network Error','Check your connection and try again.');
-    } finally{
-      btn.disabled=false; btn.classList.remove('loading');
-    }
-  });
-})();
-</script>
-
-</section>
+    </section>
 
     <!-- CTA SECTION -->
     <style>
@@ -5520,7 +5993,8 @@
                 transition: all 0.2s ease;
                 font-weight: 500;
                 font-size: 0.95rem;
-                display: inline-block;;
+                display: inline-block;
+                ;
             }
 
             .quick-links a:hover {
