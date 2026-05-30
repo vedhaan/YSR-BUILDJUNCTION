@@ -2922,12 +2922,12 @@
 
         /* Forward row */
         .marquee-track--forward {
-            animation: marqueeForward 30s linear infinite;
+            animation: marqueeForward 60s linear infinite;
         }
 
         /* Reverse row */
         .marquee-track--reverse {
-            animation: marqueeReverse 30s linear infinite;
+            animation: marqueeReverse 60s linear infinite;
         }
 
         /* Pause on hover */
@@ -3021,6 +3021,22 @@
 
             .logo-item-enhanced {
                 margin: 0 1rem;
+            }
+
+            .trust-badge {
+                gap: 0.2rem;
+                flex-wrap: nowrap;
+                /* force single row */
+                justify-content: center;
+            }
+
+            .badge-item {
+                font-size: 0.68rem;
+                /* tighten the text */
+                padding: 0.35rem 0.6rem;
+                /* reduce horizontal padding */
+                white-space: nowrap;
+                /* prevent text wrapping inside badge */
             }
         }
     </style>
