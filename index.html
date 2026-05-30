@@ -1698,6 +1698,10 @@
             overflow-x: hidden;
         }
 
+        .ysr-hidden {
+            display: none !important;
+        }
+
         /* ══════════════════════════════
         HEADER
     ══════════════════════════════ */
@@ -1958,42 +1962,42 @@
             cursor: pointer;
         }
 
-        .ysr-tile:nth-child(1) {
+        .ysr-tile[data-pos="1"] {
             grid-column: 1 / 7;
             grid-row: 1 / 7;
         }
 
-        .ysr-tile:nth-child(2) {
+        .ysr-tile[data-pos="2"] {
             grid-column: 7 / 10;
             grid-row: 1 / 4;
         }
 
-        .ysr-tile:nth-child(3) {
+        .ysr-tile[data-pos="3"] {
             grid-column: 10 / 13;
             grid-row: 1 / 4;
         }
 
-        .ysr-tile:nth-child(4) {
+        .ysr-tile[data-pos="4"] {
             grid-column: 7 / 10;
             grid-row: 4 / 7;
         }
 
-        .ysr-tile:nth-child(5) {
+        .ysr-tile[data-pos="5"] {
             grid-column: 10 / 13;
             grid-row: 4 / 7;
         }
 
-        .ysr-tile:nth-child(6) {
+        .ysr-tile[data-pos="6"] {
             grid-column: 1 / 5;
             grid-row: 7 / 11;
         }
 
-        .ysr-tile:nth-child(7) {
+        .ysr-tile[data-pos="7"] {
             grid-column: 5 / 9;
             grid-row: 7 / 11;
         }
 
-        .ysr-tile:nth-child(8) {
+        .ysr-tile[data-pos="8"] {
             grid-column: 9 / 13;
             grid-row: 7 / 11;
         }
@@ -3039,6 +3043,22 @@
                 /* prevent text wrapping inside badge */
             }
         }
+
+        @keyframes ysrFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ysr-tile {
+            animation: ysrFadeUp 0.4s ease forwards;
+        }
     </style>
 </head>
 
@@ -3753,6 +3773,7 @@
 
     </section>
 
+
     <!-- SERVICES SECTION -->
     <section class="ysr-services">
         <div class="ysr-services__inner">
@@ -4101,16 +4122,16 @@
             <div class="ysr-gallery-head">
                 <h3>Project Visuals &amp; <span>Finishes</span></h3>
                 <div class="ysr-filter-row">
-                    <button class="ysr-filter-btn active">All</button>
-                    <button class="ysr-filter-btn">Interiors</button>
-                    <button class="ysr-filter-btn">Exteriors</button>
-                    <button class="ysr-filter-btn">Materials</button>
+                    <button class="ysr-filter-btn active" data-filter="all">All</button>
+                    <button class="ysr-filter-btn" data-filter="interiors">Interiors</button>
+                    <button class="ysr-filter-btn" data-filter="exteriors">Exteriors</button>
+                    <button class="ysr-filter-btn" data-filter="materials">Materials</button>
                 </div>
             </div>
 
             <div class="ysr-bento">
 
-                <div class="ysr-tile featured">
+                <div class="ysr-tile featured" data-category="interiors" data-pos="1">
                     <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85"
                         alt="Modern interior" loading="lazy">
                     <div class="ysr-tile-mask">
@@ -4120,7 +4141,7 @@
                     <div class="ysr-tile-num">01</div>
                 </div>
 
-                <div class="ysr-tile">
+                <div class="ysr-tile" data-category="structure" data-pos="2">
                     <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=700&q=85"
                         alt="Construction framework" loading="lazy">
                     <div class="ysr-tile-mask">
@@ -4130,7 +4151,7 @@
                     <div class="ysr-tile-num">02</div>
                 </div>
 
-                <div class="ysr-tile">
+                <div class="ysr-tile" data-category="materials" data-pos="3">
                     <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=700&q=85"
                         alt="Porcelain tiles" loading="lazy">
                     <div class="ysr-tile-mask">
@@ -4140,7 +4161,7 @@
                     <div class="ysr-tile-num">03</div>
                 </div>
 
-                <div class="ysr-tile">
+                <div class="ysr-tile" data-category="materials" data-pos="4">
                     <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85"
                         alt="Material showroom" loading="lazy">
                     <div class="ysr-tile-mask">
@@ -4150,7 +4171,7 @@
                     <div class="ysr-tile-num">04</div>
                 </div>
 
-                <div class="ysr-tile">
+                <div class="ysr-tile" data-category="interiors" data-pos="5">
                     <img src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?w=700&q=85"
                         alt="Luxury interior" loading="lazy">
                     <div class="ysr-tile-mask">
@@ -4160,7 +4181,7 @@
                     <div class="ysr-tile-num">05</div>
                 </div>
 
-                <div class="ysr-tile">
+                <div class="ysr-tile" data-category="exteriors" data-pos="6">
                     <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=900&q=85"
                         alt="Commercial project" loading="lazy">
                     <div class="ysr-tile-mask">
@@ -4170,7 +4191,7 @@
                     <div class="ysr-tile-num">06</div>
                 </div>
 
-                <div class="ysr-tile">
+                <div class="ysr-tile" data-category="interiors" data-pos="7">
                     <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?w=900&q=85"
                         alt="Kitchen interior" loading="lazy">
                     <div class="ysr-tile-mask">
@@ -4180,7 +4201,7 @@
                     <div class="ysr-tile-num">07</div>
                 </div>
 
-                <div class="ysr-tile">
+                <div class="ysr-tile" data-category="exteriors" data-pos="8">
                     <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=85"
                         alt="Residential exterior" loading="lazy">
                     <div class="ysr-tile-mask">
@@ -4210,17 +4231,41 @@
         </div>
 
         <script>
-            document.querySelectorAll('.ysr-filter-btn').forEach(btn => {
+            const filterBtns = document.querySelectorAll('.ysr-filter-btn');
+            const tiles = document.querySelectorAll('.ysr-bento .ysr-tile');
+
+            filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    document.querySelectorAll('.ysr-filter-btn').forEach(b => b.classList.remove('active'));
+                    filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
+
+                    const filter = btn.dataset.filter;
+
+                    // Step 1: show/hide
+                    tiles.forEach(tile => {
+                        if (filter === 'all' || tile.dataset.category === filter) {
+                            tile.classList.remove('ysr-hidden');
+                        } else {
+                            tile.classList.add('ysr-hidden');
+                        }
+                    });
+                    
+
+                    // Step 2: re-index visible tiles so nth-child grid positions reassign
+                    const visible = [...tiles].filter(t => !t.classList.contains('ysr-hidden'));
+                    visible.forEach((tile, i) => {
+                        tile.setAttribute('data-pos', i + 1);
+
+                        // Force reflow so animation retriggers
+                        tile.style.animation = 'none';
+                        tile.offsetHeight; // triggers reflow
+                        tile.style.animation = '';
+                    });
                 });
             });
 
             const vid = document.querySelector('.ysr-showroom video');
-            if (vid) {
-                vid.play().catch(() => { });
-            }
+            if (vid) vid.play().catch(() => { });
         </script>
 
     </section>
